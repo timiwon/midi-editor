@@ -1,19 +1,21 @@
 import React from "react"
-import type { MouseEvent } from "react";
 import { Box } from "@mui/material"
 
 import type { Song } from '@/types/entities';
 
 import BaseModal from "@/shared-components/modals/BaseModal";
 import SongForm from "./SongForm";
+import { useSongs } from "@/hooks";
 
 interface SongModalProps {
     open: boolean;
-    onClose: (e: MouseEvent<HTMLButtonElement>) => void; 
+    onClose: () => void; 
 }
 const SongModal: React.FC<SongModalProps> = ({open, onClose}) => {
+    const { createSong } = useSongs();
     function handleSubmit (values: Omit<Song, "id" | "notes" | "trackLabels">) {
-        console.log(values);
+        createSong(values);
+        onClose();
     }
 
     return (

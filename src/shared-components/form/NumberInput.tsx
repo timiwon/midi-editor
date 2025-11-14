@@ -25,8 +25,8 @@ export const NumberInput: React.FC<InputProps> = ({ name, label }) => {
                     slotProps={{
                         input: {
                             inputProps: {
-                                min: 1,
-                                max: 100,
+                                min: 0,
+                                max: 300,
                                 step: 1,
                             }
                         }

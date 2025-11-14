@@ -8,7 +8,7 @@ import { useState } from "react";
 
 const Home = () => {
     const [isOpenSongModal, setIsOpenSongModal] = useState(false)
-
+    
     return (
         <Box>
             {/** page description */}
@@ -22,6 +22,7 @@ const Home = () => {
                 {/** Action toolbar */}
                 <ActionToolbar onCreateBtnClick={() => setIsOpenSongModal(true)}/>
             </MainBlock>
+
 
             <SongModal
                 open={isOpenSongModal}

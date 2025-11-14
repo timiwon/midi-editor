@@ -17,7 +17,9 @@ const validationSchema = Yup.object().shape({
         .max(500, 'Too Long!')
         .required('Required'),
     totalDuration: Yup.number()
-        .max(300, 'max 300s')
+        .min(0, 'At least 0 second')
+        .max(300, 'Max 300s')
+        .typeError('Duration must be a number')
         .required('Required'),
 });
 
