@@ -1,6 +1,5 @@
 import React from 'react';
 import type { ReactNode } from 'react';
-
 import { Box } from "@mui/material";
 import type { SxProps } from "@mui/material";
 

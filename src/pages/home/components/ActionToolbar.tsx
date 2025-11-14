@@ -1,15 +1,15 @@
 import React from 'react';
 import type { MouseEvent } from 'react';
-
 import { Box, Button, Typography } from "@mui/material";
 import AddIcon from '@mui/icons-material/Add';
+
 import { detectDevice, SupportedDevice } from "@/lib/device-detected";
 
 interface ActionToolbarProps {
-    onCreate: (e: MouseEvent<HTMLButtonElement>) => void; 
+    onCreateBtnClick: (e: MouseEvent<HTMLButtonElement>) => void; 
 }
 const ActionToolbar: React.FC<ActionToolbarProps> = ({
-    onCreate
+    onCreateBtnClick
 }) => {
     const gridTemplateAreas = !detectDevice(SupportedDevice.Mobile) ? 
         `"main main . sidebar"` :
@@ -42,7 +42,7 @@ const ActionToolbar: React.FC<ActionToolbarProps> = ({
                 display: 'flex',
                 justifyContent: 'flex-end',
             }}>
-                <CreateButton onClick={onCreate}/>
+                <CreateButton onClick={onCreateBtnClick}/>
             </Box>
         </Box>
     )

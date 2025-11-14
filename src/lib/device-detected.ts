@@ -5,7 +5,7 @@ export enum SupportedDevice {
     Tablet = 'tablet'
 }
 
-export const detectDevice = (deviceType: SupportedDevice) => {
+export function detectDevice (deviceType: SupportedDevice) {
     const theme = useTheme();
     let isMatching = false;
 

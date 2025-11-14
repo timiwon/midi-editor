@@ -1,14 +1,21 @@
 import React from "react"
 import type { MouseEvent } from "react";
-import { Box, Typography } from "@mui/material"
+import { Box } from "@mui/material"
+
+import type { Song } from '@/types/entities';
 
 import BaseModal from "@/shared-components/modals/BaseModal";
+import SongForm from "./SongForm";
 
 interface SongModalProps {
     open: boolean;
     onClose: (e: MouseEvent<HTMLButtonElement>) => void; 
 }
 const SongModal: React.FC<SongModalProps> = ({open, onClose}) => {
+    function handleSubmit (values: Omit<Song, "id" | "notes" | "trackLabels">) {
+        console.log(values);
+    }
+
     return (
         <BaseModal
             open={open}
@@ -17,9 +24,7 @@ const SongModal: React.FC<SongModalProps> = ({open, onClose}) => {
             description="Duis mollis, est non commodo luctus, nisi erat porttitor ligula."
         >
             <Box>
-                <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-                    gogo
-                </Typography>
+                <SongForm onSubmit={handleSubmit}/>
             </Box>
         </BaseModal>
     )
