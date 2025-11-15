@@ -23,7 +23,7 @@ export abstract class BaseRepository<T> implements BaseRepositoryInterface<T> {
         });
     }
 
-    getList(page: number, perPage: number): Promise<T[]> {
+    getList(): Promise<T[]> {
         return new Promise<T[]>((resolve) => {
             const listString = localStorage.getItem(this.table);
             const list: T[] = listString ? JSON.parse(listString) : [];
@@ -84,7 +84,7 @@ export abstract class BaseRepository<T> implements BaseRepositoryInterface<T> {
     delete(id: string) {
         return new Promise((resolve, reject) => {
             const listString = localStorage.getItem(this.table);
-            let list: ItemType<T>[] = listString ? JSON.parse(listString) : [];
+            const list: ItemType<T>[] = listString ? JSON.parse(listString) : [];
             const index = list.findIndex(obj => obj?.id === id);
 
             if (index == -1) {

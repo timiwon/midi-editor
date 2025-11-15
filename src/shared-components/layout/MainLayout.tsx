@@ -19,23 +19,21 @@ interface LayoutProps {
     title?: string;
 }
 
-const MainLayout: React.FC<LayoutProps> = ({ children, title = 'MIDI - EDITOR' }) => {
-    return (
-        <ThemeProvider theme={customTheme}>
-            <Box sx={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
-                <AppBar position="fixed">
-                    <Toolbar>
-                        <Typography variant="h6">
-                            {title}
-                        </Typography>
-                    </Toolbar>
-                </AppBar>
-                <Container component="main" sx={{ flexGrow: 1, pt: 10 }}>
-                    {children}
-                </Container>
-            </Box>
-        </ThemeProvider>
-    );
-};
+const MainLayout: React.FC<LayoutProps> = ({ children, title = 'MIDI - EDITOR' }) => (
+    <ThemeProvider theme={customTheme}>
+        <Box sx={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
+            <AppBar position="fixed">
+                <Toolbar>
+                    <Typography variant="h6">
+                        {title}
+                    </Typography>
+                </Toolbar>
+            </AppBar>
+            <Container component="main" sx={{ flexGrow: 1, pt: 10 }}>
+                {children}
+            </Container>
+        </Box>
+    </ThemeProvider>
+);
 
 export default MainLayout;

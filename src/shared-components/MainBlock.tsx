@@ -8,15 +8,13 @@ interface MainBlockProps {
     sx?: SxProps
 }
 
-const MainBlock: React.FC<MainBlockProps> = ({ children, sx }) => {
-    return (
-        <Box sx={{
-            mt: 2,
-            ...sx
-        }}>
-            {children}
-        </Box>
-    )
-}
+const MainBlock: React.FC<MainBlockProps> = ({ children, sx }) => (
+    <Box sx={{
+        mt: 2,
+        ...sx
+    }}>
+        {children}
+    </Box>
+)
 
 export default MainBlock

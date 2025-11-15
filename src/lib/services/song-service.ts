@@ -5,14 +5,14 @@ import type { Song } from "@/types/entities";
 export class SongService implements SongServiceInterface {
     protected repo = new SongRepository();
 
-    async getList(page: number, perPage: number) {
-        const results = await this.repo.getList(page, perPage);
+    async getList() {
+        const results = await this.repo.getList();
         return results;
     }
 
     async getDetail(songId: string): Promise<Song> {
-       const song =  await this.repo.findById(songId);
-       return song;
+        const song = await this.repo.findById(songId);
+        return song;
     }
 
     async create(data: Omit<Song, "id" | "notes" | "trackLabels">): Promise<Song> {

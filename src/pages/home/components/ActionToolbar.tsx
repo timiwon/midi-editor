@@ -3,7 +3,7 @@ import type { MouseEvent } from 'react';
 import { Box, Button, Typography } from "@mui/material";
 import AddIcon from '@mui/icons-material/Add';
 
-import { detectDevice, SupportedDevice } from "@/lib/device-detected";
+import { useUtils } from "@/hooks/use-utils";
 
 interface ActionToolbarProps {
     onCreateBtnClick: (e: MouseEvent<HTMLButtonElement>) => void; 
@@ -11,7 +11,9 @@ interface ActionToolbarProps {
 const ActionToolbar: React.FC<ActionToolbarProps> = ({
     onCreateBtnClick
 }) => {
-    const gridTemplateAreas = !detectDevice(SupportedDevice.Mobile) ? 
+    const { isMobile } = useUtils();
+
+    const gridTemplateAreas = !isMobile ? 
         `"main main . sidebar"` :
         `
             "main main main main"
@@ -52,8 +54,10 @@ interface CreateButtonProps {
     onClick: (e: MouseEvent<HTMLButtonElement>) => void;
 }
 const CreateButton: React.FC<CreateButtonProps> = ({onClick}) => {
+    const { isMobile } = useUtils();
+
     return (<>
-        {detectDevice(SupportedDevice.Mobile) && (
+        {isMobile && (
             <Button
                 size='small'
                 variant="contained"
@@ -62,7 +66,7 @@ const CreateButton: React.FC<CreateButtonProps> = ({onClick}) => {
                 Create
             </Button>
         )}
-        {!detectDevice(SupportedDevice.Mobile) && (
+        {!isMobile && (
             <Button
                 size='small'
                 variant="contained"

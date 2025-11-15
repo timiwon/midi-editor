@@ -11,12 +11,16 @@ export function useSongs() {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
 
+    useEffect(() => {
+        debounceLoadSongs();
+    }, []);
+
     const debounceLoadSongs = debounce(loadSongs, 500);
-    async function loadSongs(page: number, perPage: number) {
+    async function loadSongs() {
         setLoading(true);
         setError(null);
         try {
-            const list = await service.getList(page, perPage);
+            const list = await service.getList();
             setSongs(list);
         } catch (err) {
             setError(getErrorMessage(err, "Failed to get songs."));
@@ -63,7 +67,7 @@ export function useSongs() {
                 return;
             }
 
-            let newList = [...songs];
+            const newList = [...songs];
             delete newList[index]
             setSongs(newList.filter(Boolean));
         } catch (err) {
@@ -72,10 +76,6 @@ export function useSongs() {
             setLoading(false);
         }
     }
-
-    useEffect(() => {
-        debounceLoadSongs(1, 500);
-    }, []);
 
     return {
         songs,

@@ -4,7 +4,7 @@ import type { TransitionProps } from '@mui/material/transitions';
 
 const Transition = React.forwardRef(function Transition(
     props: TransitionProps & {
-        children: React.ReactElement<any, any>;
+        children: React.ReactElement<unknown, string>;
     },
     ref: React.Ref<unknown>,
 ) {
@@ -30,26 +30,26 @@ const ConfirmDialog: React.FC<ConfirmDialogProps> = ({
     onCancel,
     onOk
 }) => (
-        <Dialog
-            open={open}
-            slots={{
-                transition: Transition,
-            }}
-            keepMounted
-            onClose={onCancel}
-            aria-describedby="alert-dialog-slide-description"
-        >
-            <DialogTitle>{title}</DialogTitle>
-            <DialogContent>
-                <DialogContentText id="alert-dialog-slide-description">
-                    {description}
-                </DialogContentText>
-            </DialogContent>
-            <DialogActions>
-                <Button onClick={onCancel}>{cancelBtnLabel ? cancelBtnLabel : 'Disagree'}</Button>
-                <Button onClick={onOk}>{okBtnLabel ? okBtnLabel : 'Agree'}</Button>
-            </DialogActions>
-        </Dialog>
-    );
+    <Dialog
+        open={open}
+        slots={{
+            transition: Transition,
+        }}
+        keepMounted
+        onClose={onCancel}
+        aria-describedby="alert-dialog-slide-description"
+    >
+        <DialogTitle>{title}</DialogTitle>
+        <DialogContent>
+            <DialogContentText id="alert-dialog-slide-description">
+                {description}
+            </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+            <Button onClick={onCancel}>{cancelBtnLabel ? cancelBtnLabel : 'Disagree'}</Button>
+            <Button onClick={onOk}>{okBtnLabel ? okBtnLabel : 'Agree'}</Button>
+        </DialogActions>
+    </Dialog>
+);
 
 export default ConfirmDialog

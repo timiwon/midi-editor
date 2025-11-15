@@ -1,10 +1,7 @@
 import type { Song } from "./entities";
 
-export interface BaseServiceInterface<T> {
-    getList(
-        page: number,
-        perPage: number
-    ): Promise<T[]>;
+export type BaseServiceInterface<T> = {
+    getList(): Promise<T[]>;
     getDetail(
         id: string
     ): Promise<T>;
@@ -20,7 +17,7 @@ export interface BaseServiceInterface<T> {
     ): void;
 }
 
-export interface SongServiceInterface extends BaseServiceInterface<Song> {
+export type SongServiceInterface = BaseServiceInterface<Song> & {
     create(
         data: Omit<Song, "id" | "notes" | "trackLabels">,
     ): Promise<Song>;

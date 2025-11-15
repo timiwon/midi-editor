@@ -1,11 +1,11 @@
 import type { Song } from "./entities";
 
-export interface BaseRepositoryInterface<T> {
+export type BaseRepositoryInterface<T> = {
     findById: (id: string) => Promise<T>;
-    getList: (page: number, perPage: number) => Promise<T[]>;
+    getList: () => Promise<T[]>;
     create: (params: T) => Promise<T>;
     updateById: (id: string, params: Partial<T>) => Promise<T>;
     delete: (id: string) => void;
 }
 
-export interface SongRepositoryInterface extends BaseRepositoryInterface<Song> {}
+export type SongRepositoryInterface = BaseRepositoryInterface<Song>;

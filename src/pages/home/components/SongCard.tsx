@@ -1,8 +1,10 @@
 import React from "react";
-import { Box, Card, Chip, Divider, IconButton, Stack, Typography } from "@mui/material";
+import { useNavigate } from 'react-router-dom';
+import { Box, Card, Chip, Divider, IconButton, Stack, Typography, useTheme } from "@mui/material";
 import { Edit, Delete } from '@mui/icons-material';
 
 import type { Song } from "@/types/entities";
+import { PATH } from "@/lib/paths";
 
 interface SongCardProps {
     data: Song
@@ -14,8 +16,40 @@ const SongCard: React.FC<SongCardProps> = ({
     onEditClick,
     onDeleteClick
 }) => {
+    const navigate = useNavigate();
+    const theme = useTheme();
+
+    function handleEditClick(e: React.MouseEvent<HTMLButtonElement>) {
+        e.stopPropagation();
+        onEditClick();
+    }
+
+    function handleDeleteClick(e: React.MouseEvent<HTMLButtonElement>) {
+        e.stopPropagation();
+        onDeleteClick();
+    }
+
     return (
-        <Card className="mb-5 w-full md:w-1/2">
+        <Card
+            className="mb-5 w-full md:w-1/2 cursor-pointer"
+            sx={{
+                '&:hover': {
+                    bgcolor: theme.palette.primary.light,
+                    color: '#fff',
+                    boxShadow: '0px 4px 20px rgba(0, 0, 0, 0.1)',
+                    '& .MuiChip-label': {
+                        color: '#fff',
+                    },
+                    '& .MuiDivider-root': {
+                        borderColor: '#fff'
+                    },
+                    '& .MuiIconButton-root': {
+                        color: '#fff'
+                    }
+                },
+            }}
+            onClick={() => navigate(PATH.SONG_DETAIL.replace(':songId', data.id))}
+        >
             <Box sx={{ p: 2 }}>
                 <Stack
                     direction="row"
@@ -32,7 +66,7 @@ const SongCard: React.FC<SongCardProps> = ({
                         size="medium"
                     />
                 </Stack>
-                <Typography variant="body2" sx={{ color: 'text.secondary' }}>
+                <Typography variant="body2">
                     {data.description}
                 </Typography>
             </Box>
@@ -56,10 +90,10 @@ const SongCard: React.FC<SongCardProps> = ({
 
             <Divider />
             <Box sx={{ display: 'flex', justifyContent: 'flex-end', p: 2 }}>
-                <IconButton onClick={onDeleteClick}>
+                <IconButton onClick={handleDeleteClick}>
                     <Delete />
                 </IconButton>
-                <IconButton onClick={onEditClick}>
+                <IconButton onClick={handleEditClick}>
                     <Edit />
                 </IconButton>
             </Box>

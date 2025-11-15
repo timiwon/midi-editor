@@ -1,4 +1,4 @@
-import { Alert, AlertTitle, Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, useMediaQuery, useTheme } from "@mui/material";
+import { Alert, AlertTitle, Button, Dialog, DialogActions, useTheme } from "@mui/material";
 import React from "react";
 
 interface ErrorDialogProps {

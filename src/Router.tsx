@@ -3,6 +3,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { PATH } from "@/lib/paths";
 import Loading from "@/shared-components/Loading";
 import Home from "@/pages/home/index";
+import SongPage from "@/pages/song";
 
 const Router = () => {
     return (
@@ -10,6 +11,7 @@ const Router = () => {
             <BrowserRouter basename={PATH.HOME}>
                 <Routes>
                     <Route path={PATH.HOME} element={<Home />}/>
+                    <Route path={PATH.SONG_DETAIL} element={<SongPage />} />
                 </Routes>
             </BrowserRouter>
         </Suspense>

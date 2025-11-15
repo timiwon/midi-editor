@@ -40,7 +40,7 @@ export type FormValues = {
 };
 interface SongFormProps {
     data: Song | null;
-    onSubmit: (values: FormValues) => void;
+    onSubmit: (values: Omit<Song, "id" | "notes">) => void;
 }
 const SongForm: React.FC<SongFormProps> = ({
     data,
@@ -77,10 +77,12 @@ const SongForm: React.FC<SongFormProps> = ({
             return;
         }
 
-        onSubmit({
+        const newValues = {
             ...values,
             trackLabels: methods.getValues('trackLabels')
-        });
+        }
+
+        onSubmit(newValues as Omit<Song, "id" | "notes">);
     }
 
     return (

@@ -18,7 +18,7 @@ const SongTrackLabelsField = () => {
                 remove(fields.length - 1);
             }
         });
-    }, [fields])
+    }, [fields, remove, trigger])
 
     return (
         <FormControl
