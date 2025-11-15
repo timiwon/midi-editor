@@ -3,6 +3,8 @@ import { v4 as uuidv4 } from 'uuid';
 import type { BaseRepositoryInterface } from "@/types/repositories";
 import { AvailableTableName } from "../constant";
 
+const delayTimeDemo = 1000;
+
 type ItemType<T> = (T & { id: string }) | null;
 export abstract class BaseRepository<T> implements BaseRepositoryInterface<T> {
     abstract table: AvailableTableName;
@@ -25,7 +27,10 @@ export abstract class BaseRepository<T> implements BaseRepositoryInterface<T> {
         return new Promise<T[]>((resolve) => {
             const listString = localStorage.getItem(this.table);
             const list: T[] = listString ? JSON.parse(listString) : [];
-            return resolve(list);
+
+            setTimeout(function() {
+                return resolve(list);
+            }, delayTimeDemo);
         });
     }
 
@@ -42,6 +47,7 @@ export abstract class BaseRepository<T> implements BaseRepositoryInterface<T> {
                 ...list,
                 item
             ]));
+
             return resolve(item);
         });
     }
@@ -70,6 +76,7 @@ export abstract class BaseRepository<T> implements BaseRepositoryInterface<T> {
                 }),
             ];
             localStorage.setItem(this.table, JSON.stringify(updatedList));
+
             return resolve(result as T);
         });
     }
@@ -86,6 +93,7 @@ export abstract class BaseRepository<T> implements BaseRepositoryInterface<T> {
 
             list.splice(index, 1)
             localStorage.setItem(this.table, JSON.stringify(list));
+
             return resolve(null)
         });
     }

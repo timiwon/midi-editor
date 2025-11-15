@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, Card, CardContent, Chip, Divider, IconButton, Stack, Typography } from "@mui/material";
+import { Box, Card, Chip, Divider, IconButton, Stack, Typography } from "@mui/material";
 import { Edit, Delete } from '@mui/icons-material';
 
 import type { Song } from "@/types/entities";
@@ -15,7 +15,7 @@ const SongCard: React.FC<SongCardProps> = ({
     onDeleteClick
 }) => {
     return (
-        <Card className="mb-1 w-full md:w-1/2">
+        <Card className="mb-5 w-full md:w-1/2">
             <Box sx={{ p: 2 }}>
                 <Stack
                     direction="row"

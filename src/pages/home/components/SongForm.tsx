@@ -1,48 +1,46 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import * as Yup from 'yup';
-import { useForm, FormProvider, useFieldArray, useFormContext } from 'react-hook-form';
+import { useForm, FormProvider } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { Button, Box, TextField, IconButton, FormHelperText, FormControl } from '@mui/material';
-import DeleteIcon from '@mui/icons-material/Delete';
+import { Button, Box } from '@mui/material';
 
 import type { Song } from '@/types/entities';
 
 import { Input, NumberInput } from '@/shared-components/form';
+import SongTrackLabelsField from './SongTrackLabelsField';
 
 const validationSchema = Yup.object().shape({
     name: Yup.string()
-        .min(2, 'Too Short!')
-        .max(50, 'Too Long!')
+        .min(2, 'Required at least 2 characters!')
+        .max(50, 'Max length is 50 characters!')
         .required('Required'),
     description: Yup.string()
-        .min(2, 'Too Short!')
-        .max(500, 'Too Long!')
+        .min(2, 'Required at least 2 characters!')
+        .max(500, 'Max length is 500 characters!')
         .required('Required'),
     totalDuration: Yup.number()
-        .min(0, 'At least 0 second')
-        .max(300, 'Max 300s')
-        .typeError('Duration must be a number')
+        .min(10, 'Required at least 10 seconds!')
+        .max(300, 'Maximum is 300s!')
+        .typeError('Duration must be a number!')
         .required('Required'),
     trackLabels: Yup.array()
-        .min(1, 'Track Labels must contain at least one item')
-        .max(8, 'Max 8 items')
+        .min(1, 'Track Labels must contain at least one item!')
+        .max(8, 'Maximum is 8 items!')
         .of(Yup.string()
-            .min(2, 'Too Short!')
-            .max(10, 'Too Long!')
-            .required('Required')
+            .max(10, 'Max length is 10 characters!')
         )
         .required('Required'),
 });
 
-type FormValues = {
+export type FormValues = {
     name: string;
     description: string;
     totalDuration: number;
-    trackLabels: string[];
+    trackLabels: (string | undefined)[];
 };
 interface SongFormProps {
     data: Song | null;
-    onSubmit: (values: Omit<Song, "id" | "notes">) => void;
+    onSubmit: (values: FormValues) => void;
 }
 const SongForm: React.FC<SongFormProps> = ({
     data,
@@ -59,12 +57,38 @@ const SongForm: React.FC<SongFormProps> = ({
         resolver: yupResolver(validationSchema)
     });
 
+    async function handleSubmit(values: FormValues) {
+        /**
+         *  Solution for validate array item with not allow empty string
+         * 
+         *  trackLabels: Yup.array()
+         *      ...
+         *      .of(Yup.string()
+         *          // we cannot add .min here 
+         *          .max(10, 'Max length is 10 characters!')
+         *      )
+         *      .required('Required'),
+         */
+        const newData = values.trackLabels.filter(Boolean) // remove items that are empty strings from trackLabels
+        methods.setValue('trackLabels', newData)
+        const isValid = await methods.trigger('trackLabels', { shouldFocus: true });
+
+        if (!isValid) {
+            return;
+        }
+
+        onSubmit({
+            ...values,
+            trackLabels: methods.getValues('trackLabels')
+        });
+    }
+
     return (
         <FormProvider {...methods}>
             <Input name="name" label="Name" />
             <Input name="description" label="Description" />
             <NumberInput name="totalDuration" label="Duration" />
-            <TrackLabelsField />
+            <SongTrackLabelsField />
             <Box sx={{
                 display: 'flex',
                 justifyContent: 'flex-end'
@@ -73,7 +97,7 @@ const SongForm: React.FC<SongFormProps> = ({
                     type="submit"
                     variant="contained"
                     color="primary"
-                    onClick={methods.handleSubmit(onSubmit)}
+                    onClick={methods.handleSubmit(handleSubmit)}
                 >
                     Save
                 </Button>
@@ -81,65 +105,5 @@ const SongForm: React.FC<SongFormProps> = ({
         </FormProvider>
     );
 };
-
-const TrackLabelsField = () => {
-    const { control, register, trigger, formState: { errors } } = useFormContext<FormValues>();
-    const { fields, append, remove } = useFieldArray({
-        control,
-        name: 'trackLabels' as never,
-    });
-
-    useEffect(() => {
-        trigger(`trackLabels`).then(isValid => {
-            if (!isValid && fields.length > 0) {
-                remove(fields.length - 1);
-            }
-        });
-    }, [fields])
-
-    return (
-        <FormControl
-            variant="standard"
-            margin="normal"
-            error={Boolean(errors.trackLabels?.message)}
-        >
-            <Button
-                size='small'
-                variant='outlined'
-                color='success'
-                sx={{ width: 195, mb: 1 }}
-                onClick={async (e) => {
-                    e.preventDefault();
-
-                    const isValid = await trigger(`trackLabels`);
-                    if (!isValid && fields.length > 0) {
-                        return;
-                    }
-
-                    append("");
-                }}
-            >
-                add Track
-            </Button>
-            {Boolean(errors.trackLabels?.message) && (
-                <FormHelperText>{errors.trackLabels?.message?.toString()}</FormHelperText>
-            )}
-            {fields.map((field, index) => (
-                <Box key={field.id} sx={{ mb: 1 }}>
-                    <TextField
-                        size='small'
-                        {...register(`trackLabels.${index}`)}
-                    />
-                    <IconButton onClick={() => remove(index)}>
-                        <DeleteIcon />
-                    </IconButton>
-                    {Boolean(errors.trackLabels?.[index]) && (
-                        <FormHelperText error>{errors.trackLabels?.[index]?.message}</FormHelperText>
-                    )}
-                </Box>
-            ))}
-        </FormControl>
-    )
-}
 
 export default SongForm;

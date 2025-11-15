@@ -65,7 +65,7 @@ export function useSongs() {
 
             let newList = [...songs];
             delete newList[index]
-            setSongs(newList);
+            setSongs(newList.filter(Boolean));
         } catch (err) {
             setError(getErrorMessage(err, "Failed to delete song."));
         } finally {

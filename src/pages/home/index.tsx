@@ -12,6 +12,7 @@ import ActionToolbar from "./components/ActionToolbar";
 import SongModal from "./components/SongModal";
 import SongCard from "./components/SongCard";
 import EmptyStorage from "@/shared-components/EmptyStorage";
+import SongCardSkeleton from "./components/SongCardSkeleton";
 
 function Home() {
     const {
@@ -74,6 +75,7 @@ function Home() {
         setIsOpenConfirmDeleteDialog(false);
     }
     
+    console.log(loading, songs)
     return (
         <Box>
             {/** page description */}
@@ -89,14 +91,23 @@ function Home() {
 
                 {/** List Songs */}
                 <Box sx={{mt: 5}}>
-
+                {loading && songs.length > 0 && songs.map((song) =>
+                    <SongCardSkeleton key={song.id}/>
+                )}
+                {loading && songs.length <= 0 && [1, 2].map((index) =>
+                    <SongCardSkeleton key={index}/>
+                )}
+                {!loading && (<>
                     {(!songs || songs.length <= 0) && <EmptyStorage />}
-                    {songs && songs.length > 0 && songs.map((song, index) => <SongCard
-                        key={index}
-                        data={song}
-                        onEditClick={() => handleEditBtnClick(song)}
-                        onDeleteClick={() => handleDeleteBtnClick(song)}
-                    />)}
+                    {songs && songs.length > 0 && songs.map((song, index) =>
+                        <SongCard
+                            key={index}
+                            data={song}
+                            onEditClick={() => handleEditBtnClick(song)}
+                            onDeleteClick={() => handleDeleteBtnClick(song)}
+                        />
+                    )}
+                </>)}
                 </Box>
             </MainBlock>
 
