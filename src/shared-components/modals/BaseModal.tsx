@@ -1,6 +1,6 @@
 import React from "react"
 import type { ReactNode, MouseEvent } from "react";
-import { Box, Modal, Typography } from "@mui/material"
+import { Box, Modal, Typography, useTheme } from "@mui/material"
 
 const style = {
   position: 'absolute',
@@ -8,7 +8,7 @@ const style = {
   left: '50%',
   transform: 'translate(-50%, -50%)',
   width: 400,
-  bgcolor: 'background.paper',
+  bgcolor: 'background.default',
   border: '2px solid #000',
   boxShadow: 24,
   p: 4,
@@ -28,6 +28,8 @@ const BaseModal: React.FC<BaseModalProps> = ({
     onClose,
     children
 }) => {
+    const theme = useTheme();
+
     return (
         <Modal
             open={open}

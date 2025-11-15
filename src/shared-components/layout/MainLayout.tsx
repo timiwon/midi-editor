@@ -8,6 +8,9 @@ const customTheme = createTheme({
     palette: {
         primary: pink,
         secondary: pink,
+        background: {
+            paper: pink[50],
+        },
     },
 });
 
@@ -27,7 +30,7 @@ const MainLayout: React.FC<LayoutProps> = ({ children, title = 'MIDI - EDITOR' }
                         </Typography>
                     </Toolbar>
                 </AppBar>
-                <Container component="main" sx={{ flexGrow: 1, p: 10 }}>
+                <Container component="main" sx={{ flexGrow: 1, pt: 10 }}>
                     {children}
                 </Container>
             </Box>

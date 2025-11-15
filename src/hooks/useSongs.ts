@@ -25,14 +25,49 @@ export function useSongs() {
         }
     }
 
-    async function createSong(params: Omit<Song, "id" | "notes" | "trackLabels">) {
+    async function createSong(params: Omit<Song, "id" | "notes">) {
         setLoading(true);
         setError(null);
         try {
             const song = await service.create(params);
-            setSongs((prev) => [song, ...prev]);
+            setSongs((prev) => [...prev, song]);
         } catch (err) {
             setError(getErrorMessage(err, "Failed to create song."));
+        } finally {
+            setLoading(false);
+        }
+    }
+
+    async function saveSong(id: string, data: Omit<Song, "id" | "notes">) {
+        setLoading(true);
+        setError(null);
+        try {
+            const updatedSong = await service.update(id, data);
+            setSongs(songs.map(item => item.id === id ? updatedSong : item));
+        } catch (err) {
+            setError(getErrorMessage(err, "Failed to udpate song."));
+        } finally {
+            setLoading(false);
+        }
+    }
+
+    async function deleteSong(id: string) {
+        setLoading(true);
+        setError(null);
+        try {
+            await service.delete(id);
+
+            const index = songs.findIndex(item => item.id === id)
+
+            if (index === -1) {
+                return;
+            }
+
+            let newList = [...songs];
+            delete newList[index]
+            setSongs(newList);
+        } catch (err) {
+            setError(getErrorMessage(err, "Failed to delete song."));
         } finally {
             setLoading(false);
         }
@@ -47,6 +82,8 @@ export function useSongs() {
         loading,
         error,
         loadSongs: debounceLoadSongs,
-        createSong
+        createSong,
+        saveSong,
+        deleteSong
     }
 }

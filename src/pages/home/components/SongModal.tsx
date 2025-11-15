@@ -5,16 +5,24 @@ import type { Song } from '@/types/entities';
 
 import BaseModal from "@/shared-components/modals/BaseModal";
 import SongForm from "./SongForm";
-import { useSongs } from "@/hooks";
 
 interface SongModalProps {
     open: boolean;
+    title: string;
+    data: Song | null;
     onClose: () => void; 
+    onSave: (values: Omit<Song, "id" | "notes">) => void;
 }
-const SongModal: React.FC<SongModalProps> = ({open, onClose}) => {
-    const { createSong } = useSongs();
-    function handleSubmit (values: Omit<Song, "id" | "notes" | "trackLabels">) {
-        createSong(values);
+const SongModal: React.FC<SongModalProps> = ({
+    open,
+    title,
+    data,
+    onClose,
+    onSave
+}) => {
+
+    function handleSubmit (values: Omit<Song, "id" | "notes">) {
+        onSave(values);
         onClose();
     }
 
@@ -22,11 +30,11 @@ const SongModal: React.FC<SongModalProps> = ({open, onClose}) => {
         <BaseModal
             open={open}
             onClose={onClose}
-            title="Text in a modal"
-            description="Duis mollis, est non commodo luctus, nisi erat porttitor ligula."
+            title={title}
+            description={''}
         >
             <Box>
-                <SongForm onSubmit={handleSubmit}/>
+                <SongForm data={data} onSubmit={handleSubmit}/>
             </Box>
         </BaseModal>
     )

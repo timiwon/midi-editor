@@ -84,7 +84,9 @@ export abstract class BaseRepository<T> implements BaseRepositoryInterface<T> {
                 return reject('not-found');
             }
 
-            list.splice(index, 1);
+            list.splice(index, 1)
+            localStorage.setItem(this.table, JSON.stringify(list));
+            return resolve(null)
         });
     }
 }

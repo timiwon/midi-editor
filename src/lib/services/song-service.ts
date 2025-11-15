@@ -24,4 +24,8 @@ export class SongService implements SongServiceInterface {
         const song = await this.repo.updateById(songId, data);
         return song;
     }
+
+    async delete(songId: string) {
+        return await this.repo.delete(songId);
+    }
 }

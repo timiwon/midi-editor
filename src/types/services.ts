@@ -6,15 +6,18 @@ export interface BaseServiceInterface<T> {
         perPage: number
     ): Promise<T[]>;
     getDetail(
-        songId: string
+        id: string
     ): Promise<T>;
     create(
         data: Omit<T, "id">,
     ): Promise<T>;
     update (
-        songId: string,
+        id: string,
         data: Partial<T>
     ): Promise<T>;
+    delete (
+        id: string,
+    ): void;
 }
 
 export interface SongServiceInterface extends BaseServiceInterface<Song> {
