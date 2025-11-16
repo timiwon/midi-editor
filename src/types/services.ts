@@ -17,7 +17,10 @@ export type BaseServiceInterface<T> = {
     ): void;
 }
 
-export type SongServiceInterface = BaseServiceInterface<Song> & {
+export type SongServiceInterface = Omit<BaseServiceInterface<Song>, "getList"> & {
+    getList(
+        searchValue: string
+    ): Promise<Song[]>;
     create(
         data: Omit<Song, "id" | "notes" | "trackLabels">,
     ): Promise<Song>;

@@ -2,7 +2,7 @@ import React from 'react';
 import type { ReactNode } from 'react';
 import { AppBar, Toolbar, Typography, Container, Box } from '@mui/material';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { pink } from '@mui/material/colors';
+import { pink, grey } from '@mui/material/colors';
 
 const customTheme = createTheme({
     palette: {
@@ -10,6 +10,12 @@ const customTheme = createTheme({
         secondary: pink,
         background: {
             paper: pink[50],
+        },
+    },
+    typography: {
+        body2: {
+            color: grey[500],
+            fontSize: '0.8rem',
         },
     },
 });

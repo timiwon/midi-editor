@@ -1,13 +1,14 @@
 import { v4 as uuidv4 } from 'uuid';
+import moment from "moment";
 
 import type { BaseRepositoryInterface } from "@/types/repositories";
 import { AvailableTableName } from "../constant";
 
-const delayTimeDemo = 1000;
 
 type ItemType<T> = (T & { id: string }) | null;
 export abstract class BaseRepository<T> implements BaseRepositoryInterface<T> {
     abstract table: AvailableTableName;
+    protected delayTimeDemo = 1000;
 
     findById(id: string): Promise<T> {
         return new Promise<T>((resolve, reject) => {
@@ -23,17 +24,6 @@ export abstract class BaseRepository<T> implements BaseRepositoryInterface<T> {
         });
     }
 
-    getList(): Promise<T[]> {
-        return new Promise<T[]>((resolve) => {
-            const listString = localStorage.getItem(this.table);
-            const list: T[] = listString ? JSON.parse(listString) : [];
-
-            setTimeout(function() {
-                return resolve(list);
-            }, delayTimeDemo);
-        });
-    }
-
     create(params: T): Promise<T> {
         return new Promise<T>((resolve) => {
             const newUuid = uuidv4();
@@ -41,7 +31,9 @@ export abstract class BaseRepository<T> implements BaseRepositoryInterface<T> {
             const list: T[] = listString ? JSON.parse(listString) : [];
             const item = {
                 ...params,
-                id: newUuid
+                id: newUuid,
+                createdAt: moment.now(),
+                updatedAt: moment.now(),
             } as T;
             localStorage.setItem('songs', JSON.stringify([
                 ...list,
@@ -68,7 +60,8 @@ export abstract class BaseRepository<T> implements BaseRepositoryInterface<T> {
                     if (obj?.id === id) {
                         result = {
                             ...obj,
-                            ...params
+                            ...params,
+                            updatedAt: moment.now()
                         };
                         return result; 
                     }

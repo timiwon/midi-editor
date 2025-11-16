@@ -6,7 +6,7 @@ import { Button, Box } from '@mui/material';
 
 import type { Song } from '@/types/entities';
 
-import { Input, NumberInput } from '@/shared-components/form';
+import { Input, NumberInput, AutocompleteChip } from '@/shared-components/form';
 import SongTrackLabelsField from './SongTrackLabelsField';
 
 const validationSchema = Yup.object().shape({
@@ -23,6 +23,10 @@ const validationSchema = Yup.object().shape({
         .max(300, 'Maximum is 300s!')
         .typeError('Duration must be a number!')
         .required('Required'),
+    tags: Yup.array()
+        .min(1, 'Tags must contain at least one item!')
+        .max(8, 'Maximum is 8 items!')
+        .required('Required'),
     trackLabels: Yup.array()
         .min(1, 'Track Labels must contain at least one item!')
         .max(8, 'Maximum is 8 items!')
@@ -36,6 +40,7 @@ export type FormValues = {
     name: string;
     description: string;
     totalDuration: number;
+    tags: string[];
     trackLabels: (string | undefined)[];
 };
 interface SongFormProps {
@@ -51,6 +56,7 @@ const SongForm: React.FC<SongFormProps> = ({
             name: data ? data.name : '',
             description: data ? data.description : '',
             totalDuration: data ? data.totalDuration : 0,
+            tags: data ? data.tags : [],
             trackLabels: data ? data.trackLabels : []
         },
         mode: 'onChange',
@@ -90,6 +96,7 @@ const SongForm: React.FC<SongFormProps> = ({
             <Input name="name" label="Name" />
             <Input name="description" label="Description" />
             <NumberInput name="totalDuration" label="Duration" />
+            <AutocompleteChip name="tags" label="Tags" options={['super junior', 'dragon', 'britney spears']}/>
             <SongTrackLabelsField />
             <Box sx={{
                 display: 'flex',

@@ -5,8 +5,8 @@ import type { Song } from "@/types/entities";
 export class SongService implements SongServiceInterface {
     protected repo = new SongRepository();
 
-    async getList() {
-        const results = await this.repo.getList();
+    async getList(searchValue: string) {
+        const results = await this.repo.getList(searchValue);
         return results;
     }
 

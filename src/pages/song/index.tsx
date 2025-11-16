@@ -1,18 +1,43 @@
 import { useParams } from 'react-router-dom';
+import { Box, Table, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
+
+import { useSong } from '@/hooks';
 
 import PageDescription from '@/shared-components/PageDescription';
-import { Box } from '@mui/material';
+import MainBlock from '@/shared-components/MainBlock';
+import { cn } from '@/lib/utils';
 
 function SongPage() {
-    const { songId } = useParams();
+    const { loading, songId } = useParams();
+    const { song } = useSong(songId);
 
     return (
         <Box>
             {/** page description */}
-            <PageDescription
-                title={`Welcome to MIDI - ${songId}`}
-                content="MIDI Editor - a web application similar to a piano roll MIDI editor where users can create, visualize, and manage musical notes placed at specific time points across multiple tracks (similar to FL Studio, Ableton Live, or GarageBand's piano roll view)."
-            />
+            {song && <PageDescription
+                title={song.name}
+                content={song.description}
+            />}
+
+            <MainBlock>
+                <TableContainer>
+                    <Table stickyHeader={true} sx={{}}>
+                        <TableHead>
+                            <TableRow>
+                                {song?.trackLabels.map((track, index) =>
+                                    <TableCell
+                                        className={cn({
+                                            'song-grid-cell-major': index%2===0,
+                                            'song-grid-cell': index%2===0
+                                        })}
+                                        key={index}
+                                        align='center'
+                                    >{track}</TableCell>)}
+                            </TableRow>
+                        </TableHead>
+                    </Table>
+                </TableContainer>
+            </MainBlock>
         </Box>
     );
 }

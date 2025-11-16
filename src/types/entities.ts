@@ -3,8 +3,11 @@ export type Song = {
     name: string;
     description: string;
     totalDuration: number;
+    tags: string[];
     trackLabels: string[];
     notes: Note[];
+    createdAt: string;
+    updatedAt: string;
 }
 
 export type Note = {

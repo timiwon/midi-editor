@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
 import { TextField } from '@mui/material';
 
@@ -13,12 +13,17 @@ export const Input: React.FC<InputProps> = ({ name, label }) => {
         <Controller
             name={name}
             control={control}
-            render={({ field, fieldState: { error } }) => (
+            render={({ field: { value, disabled, name, ref, onChange, onBlur }, fieldState: { error } }) => (
                 <TextField
-                    {...field}
+                    value={value}
+                    disabled={disabled}
+                    name={name}
+                    ref={ref}
+                    onBlur={onBlur}
+                    onChange={onChange}
                     label={label}
                     error={!!error}
-                    helperText={error ? error.message : null}
+                    helperText={error ? error.message : `${value.length} characters`}
                     fullWidth
                     margin="normal"
                 />

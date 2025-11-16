@@ -1,26 +1,32 @@
 import React from 'react';
 import type { MouseEvent } from 'react';
-import { Box, Button, Typography } from "@mui/material";
+import { Box, Button, TextField, Typography } from "@mui/material";
 import AddIcon from '@mui/icons-material/Add';
 
 import { useUtils } from "@/hooks/use-utils";
 
 interface ActionToolbarProps {
-    onCreateBtnClick: (e: MouseEvent<HTMLButtonElement>) => void; 
+    onCreateBtnClick: (e: MouseEvent<HTMLButtonElement>) => void;
+    onSearch: (value: string) => void;
 }
 const ActionToolbar: React.FC<ActionToolbarProps> = ({
-    onCreateBtnClick
+    onCreateBtnClick,
+    onSearch
 }) => {
     const { isMobile } = useUtils();
 
-    const gridTemplateAreas = !isMobile ? 
+    const gridTemplateAreas = !isMobile ?
         `"main main . sidebar"` :
         `
             "main main main main"
             ". . . sidebar"
         `;
 
-    return (
+    function handleSearch(e: React.ChangeEvent<HTMLInputElement>) {
+        onSearch(e.target.value);
+    }
+
+    return (<Box>
         <Box
             sx={{
                 display: 'grid',
@@ -44,16 +50,24 @@ const ActionToolbar: React.FC<ActionToolbarProps> = ({
                 display: 'flex',
                 justifyContent: 'flex-end',
             }}>
-                <CreateButton onClick={onCreateBtnClick}/>
+                <CreateButton onClick={onCreateBtnClick} />
             </Box>
         </Box>
-    )
+
+        <Box>
+            <TextField
+                label="Search"
+                variant="outlined"
+                onChange={handleSearch}
+            />
+        </Box>
+    </Box>)
 }
 
 interface CreateButtonProps {
     onClick: (e: MouseEvent<HTMLButtonElement>) => void;
 }
-const CreateButton: React.FC<CreateButtonProps> = ({onClick}) => {
+const CreateButton: React.FC<CreateButtonProps> = ({ onClick }) => {
     const { isMobile } = useUtils();
 
     return (<>

@@ -5,38 +5,29 @@ import type { Song } from "@/types/entities";
 import { SongService } from "@/lib/services";
 import { getErrorMessage } from "@/lib/utils";
 
-export function useSongs() {
+export function useSong(songId: string | undefined) {
     const service = new SongService();
-    const [songs, setSongs] = useState<Song[]>([]);
+    const [song, setSong] = useState<Song | null>(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
 
     useEffect(() => {
-        debounceLoadSongs('');
-    }, []);
+        debounceLoadSong();
+    }, [songId]);
 
-    const debounceLoadSongs = debounce(loadSongs, 500);
-    async function loadSongs(searchValue: string) {
-        setLoading(true);
-        setError(null);
-        try {
-            const list = await service.getList(searchValue);
-            setSongs(list);
-        } catch (err) {
-            setError(getErrorMessage(err, "Failed to get songs."));
-        } finally {
-            setLoading(false);
+    const debounceLoadSong = debounce(loadSong, 500);
+    async function loadSong() {
+        if (!songId) {
+            return
         }
-    }
 
-    async function createSong(params: Omit<Song, "id" | "notes">) {
         setLoading(true);
         setError(null);
         try {
-            const song = await service.create(params);
-            setSongs((prev) => [...prev, song]);
+            const song = await service.getDetail(songId);
+            setSong(song);
         } catch (err) {
-            setError(getErrorMessage(err, "Failed to create song."));
+            setError(getErrorMessage(err, "Failed to get song detail."));
         } finally {
             setLoading(false);
         }
@@ -47,7 +38,7 @@ export function useSongs() {
         setError(null);
         try {
             const updatedSong = await service.update(id, data);
-            setSongs(songs.map(item => item.id === id ? updatedSong : item));
+            setSong(updatedSong);
         } catch (err) {
             setError(getErrorMessage(err, "Failed to udpate song."));
         } finally {
@@ -60,16 +51,7 @@ export function useSongs() {
         setError(null);
         try {
             await service.delete(id);
-
-            const index = songs.findIndex(item => item.id === id)
-
-            if (index === -1) {
-                return;
-            }
-
-            const newList = [...songs];
-            delete newList[index]
-            setSongs(newList.filter(Boolean));
+            setSong(null);
         } catch (err) {
             setError(getErrorMessage(err, "Failed to delete song."));
         } finally {
@@ -78,11 +60,10 @@ export function useSongs() {
     }
 
     return {
-        songs,
+        song,
         loading,
         error,
-        loadSongs: debounceLoadSongs,
-        createSong,
+        loadSong: debounceLoadSong,
         saveSong,
         deleteSong
     }

@@ -19,6 +19,7 @@ function Home() {
         loading,
         error,
         songs,
+        loadSongs,
         createSong,
         saveSong,
         deleteSong
@@ -40,6 +41,10 @@ function Home() {
     function hanleCreateBtnClick() {
         setSelectedSong(null);
         setIsOpenSongModal(true);
+    }
+
+    function handleSearch(value: string) {
+        loadSongs(value);
     }
 
     function handleEditBtnClick(data: Song) {
@@ -86,7 +91,10 @@ function Home() {
             {/** Songs Management */}
             <MainBlock>
                 {/** Action toolbar */}
-                <ActionToolbar onCreateBtnClick={hanleCreateBtnClick} />
+                <ActionToolbar
+                    onCreateBtnClick={hanleCreateBtnClick}
+                    onSearch={handleSearch}
+                />
 
                 {/** List Songs */}
                 <Box sx={{ mt: 5 }}>
