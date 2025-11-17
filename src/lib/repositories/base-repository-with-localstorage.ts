@@ -7,9 +7,22 @@ import { DELAY_TIME_LOADING } from '@/lib/config';
 
 
 type ItemType<T> = (T & { id: string }) | null;
+type RawResponseType<T> = (T & { id: string, createdAt: string, updatedAt: string });
+
 export abstract class BaseRepository<T> implements BaseRepositoryInterface<T> {
     abstract table: AvailableTableName;
     protected delayTimeDemo = DELAY_TIME_LOADING;
+
+    find(): Promise<T[]> {
+        return new Promise<T[]>((resolve) => {
+            const listString = localStorage.getItem(this.table);
+            const list: T[] = listString ? JSON.parse(listString) : [];
+
+            setTimeout(function () {
+                return resolve(list);
+            }, this.delayTimeDemo);
+        });
+    }
 
     findById(id: string): Promise<T> {
         return new Promise<T>((resolve, reject) => {
@@ -79,6 +92,35 @@ export abstract class BaseRepository<T> implements BaseRepositoryInterface<T> {
                 return resolve(result);
             }, this.delayTimeDemo);
         });
+    }
+
+    async rawUpdate(id: string, params: Partial<T>): Promise<T> {
+        const listString = localStorage.getItem(this.table);
+        const list: RawResponseType<T>[] = listString ? JSON.parse(listString) : [];
+        const index = list.findIndex(obj => obj?.id === id);
+
+        if (index == -1) {
+            throw Error(ErrorMessages[ErrorMessageTypes.not_found]);
+        }
+
+        let result: Partial<T>;
+        const updatedList = [
+            ...list.map(obj => {
+                if (obj?.id === id) {
+                    result = {
+                        ...params,
+                        id: obj.id,
+                        createdAt: obj.createdAt,
+                        updatedAt: moment.now()
+                    };
+                    return result;
+                }
+                return obj
+            }),
+        ];
+        localStorage.setItem(this.table, JSON.stringify(updatedList));
+
+        return await this.findById(id);
     }
 
     delete(id: string) {
