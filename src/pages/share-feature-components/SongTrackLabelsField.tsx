@@ -1,9 +1,10 @@
 import { useEffect } from "react";
 import { useFieldArray, useFormContext } from "react-hook-form";
-import { Box, Button, FormControl, FormHelperText, IconButton, TextField } from "@mui/material";
+import { Box, FormControl, FormHelperText, IconButton, TextField } from "@mui/material";
 import DeleteIcon from '@mui/icons-material/Delete';
 
 import type { FormValues } from "./SongForm";
+import Button from '@/shared-components/Button'
 
 const SongTrackLabelsField = () => {
     const { control, register, trigger, formState: { errors } } = useFormContext<FormValues>();
@@ -53,7 +54,7 @@ const SongTrackLabelsField = () => {
                         size='small'
                         {...register(`trackLabels.${index}`)}
                     />
-                    <IconButton onClick={() => remove(index)}>
+                    <IconButton color="error" onClick={() => remove(index)}>
                         <DeleteIcon />
                     </IconButton>
                     {Boolean(errors.trackLabels?.[index]) && (

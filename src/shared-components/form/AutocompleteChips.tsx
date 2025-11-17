@@ -32,6 +32,7 @@ export const AutocompleteChip: React.FC<AutocompleteChipProps> = ({ name, label,
                             <>
                                 {value.slice(0, 2).map((option, index) => (
                                     <Chip
+                                        variant='outlined'
                                         label={option}
                                         {...getItemProps({ index })}
                                         key={index}

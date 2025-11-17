@@ -1,1 +1,1 @@
-export const DELAY_TIME_LOADING = 3000;
+export const DELAY_TIME_LOADING = 2000;

@@ -5,27 +5,12 @@ import {
 } from '@mui/material';
 
 export const Card = styled(MuiCard)(({ theme }) => ({
-    '&.MuiCard-root:hover': {
-        backgroundColor: theme.palette.primary.dark,
-        color: theme.palette.secondary.light,
-        boxShadow: '0px 4px 20px rgba(0, 0, 0, 0.1)',
-        '& .MuiChip-label': {
-            color: theme.palette.secondary.light,
-        },
-        '& .MuiDivider-root': {
-            borderColor: theme.palette.secondary.light,
-        },
-        '& .MuiIconButton-root': {
-            color: theme.palette.secondary.light,
-        },
-        '& .MuiTypography-root': {
-            color: theme.palette.secondary.light,
-        }
+    transition: 'transform 0.3s ease-in-out, boxShadow 0.3s ease-in-out',
+    '&:hover': {
+        transform: 'translateY(-5px) scale(1.02)',
+        boxShadow: 10,
     },
 }));
 
 export const Button = styled(MuiButton)(({ theme }) => ({
-    '&.MuiButton-root:hover': {
-        color: theme.palette.secondary.light,
-    }
 }));

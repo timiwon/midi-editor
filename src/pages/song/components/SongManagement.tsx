@@ -57,6 +57,14 @@ const SongManagement: React.FC<SongManagementProps> = ({ song, onSaveSong }) => 
                 </Box>
                 <Box sx={{ gridArea: 'action', display: 'flex', justifyContent: 'flex-end' }}>
                     <Button
+                        sx={{ mr: 1 }}
+                        variant='outlined'
+                        color="info"
+                        onClick={() => setIsOpenSongModal(true)}
+                    >
+                        {isMobile ? 'I/O' : 'Import/Export'}
+                    </Button>
+                    <Button
                         icon={<EditIcon />}
                         onClick={() => setIsOpenSongModal(true)}
                     >

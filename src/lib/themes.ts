@@ -1,17 +1,17 @@
 import { createTheme } from '@mui/material/styles';
-import { grey } from '@mui/material/colors';
+import { blue } from '@mui/material/colors';
 
 export const mainTheme = createTheme({
     palette: {
-        primary: grey,
-        secondary: grey,
+        primary: blue,
+        secondary: blue,
         background: {
-            paper: grey[50],
+            paper: blue[50],
         },
     },
     typography: {
         body2: {
-            color: grey[500],
+            color: blue[500],
             fontSize: '0.8rem',
         },
     },
@@ -29,17 +29,17 @@ export const mainTheme = createTheme({
         MuiTableCell: {
             styleOverrides: {
                 root: {
-                    backgroundColor: grey[200],
+                    backgroundColor: blue[200],
                     '&.MuiTableCell-head.major-cell': {
-                        backgroundColor: grey[500],
+                        backgroundColor: blue[500],
                         color: '#fff'
                     },
                     '&.MuiTableCell-body': {
-                        backgroundColor: grey[50],
+                        backgroundColor: blue[50],
                         borderBottom: 'none',
                     },
                     '&.MuiTableCell-body.major-cell': {
-                        backgroundColor: grey[200],
+                        backgroundColor: blue[200],
                     },
                 }
             }
