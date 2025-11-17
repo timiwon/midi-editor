@@ -79,7 +79,7 @@ const SongCard: React.FC<SongCardProps> = ({
 
                     <Grid container spacing={1}>
                         {data.tags && data.tags.map(tag =>
-                            <Grid>
+                            <Grid key={tag}>
                                 <Chip
                                     sx={{ borderRadius: 1, pr: 1 }}
                                     variant="outlined"

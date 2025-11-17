@@ -2,12 +2,12 @@ import React from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
 import { Autocomplete, Chip, FormControl, FormHelperText, TextField } from '@mui/material';
 
-interface InputProps {
+interface AutocompleteChipProps {
     name: string;
     label: string;
     options: string[];
 }
-export const AutocompleteChip: React.FC<InputProps> = ({ name, label, options }) => {
+export const AutocompleteChip: React.FC<AutocompleteChipProps> = ({ name, label, options }) => {
     const { control, formState: { errors } } = useFormContext();
 
     return (

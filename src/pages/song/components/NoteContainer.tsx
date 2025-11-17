@@ -26,12 +26,12 @@ const NoteContainer: React.FC<NoteContainerProps> = ({song}) => {
     let toggleBodyCellClass = 'major-cell';
 
     return (
-        <TableContainer sx={{ minWidth: 80, maxWidth: `${trackLabels.length * cellWidth + timeCellWidth}px` }}>
+        <TableContainer sx={{ minWidth: 80, maxWidth: `${trackLabels?.length * cellWidth + timeCellWidth}px` }}>
             <Table stickyHeader={true}>
                 <TableHead>
                     <TableRow>
                         <TableCell width={`${timeCellWidth}px`} align='center' />
-                        {trackLabels.map((track, index) =>
+                        {trackLabels && trackLabels.map((track, index) =>
                             <TableCell
                                 key={index}
                                 width={`${cellWidth}px`}
@@ -71,7 +71,7 @@ const NoteContainer: React.FC<NoteContainerProps> = ({song}) => {
                             {/**
                              * Content Column
                              */}
-                            {trackLabels.map((track, trackIndex) =>
+                            {trackLabels && trackLabels.map((track, trackIndex) =>
                                 <TableCell
                                     key={trackIndex}
                                     className={`note-main-cell ${toggleBodyCellClass}`}
@@ -85,11 +85,11 @@ const NoteContainer: React.FC<NoteContainerProps> = ({song}) => {
                                 >
                                     <NoteCell
                                         trackIndex={trackIndex + 1}
-                                        notes={notes.filter(note =>
+                                        notes={notes ? notes.filter(note =>
                                             note.time < (index * 5 + 5) &&
                                             note.time >= index * 5 &&
                                             note.track === trackIndex + 1
-                                        )}
+                                        ) : []}
                                         mainCell={{
                                             width: cellWidth,
                                             height: cellHeight

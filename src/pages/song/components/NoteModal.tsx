@@ -1,5 +1,4 @@
 import React from "react"
-import { Box } from "@mui/material"
 
 import type { Note } from '@/types/entities';
 
@@ -34,9 +33,7 @@ const NoteModal: React.FC<NoteModalProps> = ({
             title={title}
             description={''}
         >
-            <Box>
-                <NoteForm maxTime={maxTime} data={data} onSubmit={handleSubmit}/>
-            </Box>
+            <NoteForm maxTime={maxTime} data={data} onSubmit={handleSubmit} />
         </BaseModal>
     )
 }

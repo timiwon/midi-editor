@@ -7,6 +7,8 @@ import { Button, Box } from '@mui/material';
 import type { Note } from '@/types/entities';
 
 import { Input, NumberInput } from '@/shared-components/form';
+import ColorPicker from '@/shared-components/form/ColorPicker';
+import EmojiPicker from '@/shared-components/emoji-components/EmojiPicker';
 
 interface NoteFormProps {
     maxTime: number;
@@ -46,7 +48,7 @@ const NoteForm: React.FC<NoteFormProps> = ({
             .required('Required'),
         icon: Yup.string()
             .max(50, 'Max length is 50 characters!')
-            .required('Required'),
+            .optional(),
     });
 
     const methods = useForm({
@@ -72,8 +74,8 @@ const NoteForm: React.FC<NoteFormProps> = ({
             <NumberInput name="time" label="Time" />
             <Input name="title" label="Title" />
             <Input name="description" label="Description" />
-            <Input name="color" label="Color" />
-            <Input name="icon" label="Icon" />
+            *<ColorPicker name='color' label='Color'/>
+            *<EmojiPicker name="icon" label="Icon" />
             <Box sx={{
                 display: 'flex',
                 justifyContent: 'flex-end'

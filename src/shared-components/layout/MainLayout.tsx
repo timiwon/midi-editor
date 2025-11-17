@@ -19,6 +19,13 @@ const customTheme = createTheme({
         },
     },
     components: {
+        MuiSkeleton: {
+            styleOverrides: {
+                root: {
+                    backgroundColor: pink[50],
+                }
+            }
+        },
         MuiTableCell: {
             styleOverrides: {
                 root: {
