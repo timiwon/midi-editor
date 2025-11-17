@@ -1,11 +1,22 @@
 import { useEffect, useState } from "react";
-import { debounce } from "lodash";
+import { debounce, type DebouncedFunc } from "lodash";
 
-import type { Song } from "@/types/entities";
+import type { Note, Song } from "@/types/entities";
 import { SongService } from "@/lib/services";
 import { getErrorMessage } from "@/lib/utils";
 
-export function useSong(songId: string | undefined) {
+export interface UseSongValues {
+    song: Song | null;
+    loading: boolean;
+    error: string | null;
+    loadSong: DebouncedFunc<() => Promise<void>>;
+    saveSong: (id: string, data: Omit<Song, "id" | "notes">) => Promise<void>;
+    saveNote: (songId: string, oldData: Note | null, newData: Note) => Promise<void>;
+    deleteNote: (songId: string, newData: Note) => Promise<void>;
+    deleteSong: (id: string) => Promise<void>;
+}
+
+export const useSong = (songId: string | undefined): UseSongValues => {
     const service = new SongService();
     const [song, setSong] = useState<Song | null>(null);
     const [loading, setLoading] = useState(true);
@@ -59,12 +70,42 @@ export function useSong(songId: string | undefined) {
         }
     }
 
+    async function saveNote(songId: string, oldData: Note | null, newData: Note) {
+        setLoading(true);
+        setError(null);
+        try {
+            const song = await service.saveNote(songId, oldData, newData);
+            setSong(song);
+        } catch (err) {
+            setError(getErrorMessage(err, "Failed to save note."));
+            throw(error);
+        } finally {
+            setLoading(false);
+        }
+    }
+
+    async function deleteNote(songId: string, noteData: Note) {
+        setLoading(true);
+        setError(null);
+        try {
+            const song = await service.deleteNote(songId, noteData);
+            setSong(song);
+        } catch (err) {
+            setError(getErrorMessage(err, "Failed to delete note."));
+            throw(error);
+        } finally {
+            setLoading(false);
+        }
+    }
+
     return {
         song,
         loading,
         error,
         loadSong: debounceLoadSong,
         saveSong,
+        saveNote,
+        deleteNote,
         deleteSong
     }
 }

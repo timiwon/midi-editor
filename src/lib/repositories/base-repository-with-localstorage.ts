@@ -2,7 +2,7 @@ import { v4 as uuidv4 } from 'uuid';
 import moment from "moment";
 
 import type { BaseRepositoryInterface } from "@/types/repositories";
-import { AvailableTableName } from "../constant";
+import { AvailableTableName, ErrorMessages, ErrorMessageTypes } from "../constant";
 
 
 type ItemType<T> = (T & { id: string }) | null;
@@ -17,7 +17,7 @@ export abstract class BaseRepository<T> implements BaseRepositoryInterface<T> {
             const result = list.find(obj => obj?.id === id);
 
             if (!result) {
-                return reject('not-found');
+                return reject(ErrorMessages[ErrorMessageTypes.not_found]);
             }
 
             return resolve(result);
@@ -51,7 +51,7 @@ export abstract class BaseRepository<T> implements BaseRepositoryInterface<T> {
             const index = list.findIndex(obj => obj?.id === id);
 
             if (index == -1) {
-                return reject('not-found');
+                return reject(ErrorMessages[ErrorMessageTypes.not_found]);
             }
 
             let result;
@@ -81,7 +81,7 @@ export abstract class BaseRepository<T> implements BaseRepositoryInterface<T> {
             const index = list.findIndex(obj => obj?.id === id);
 
             if (index == -1) {
-                return reject('not-found');
+                return reject(ErrorMessages[ErrorMessageTypes.not_found]);
             }
 
             list.splice(index, 1)

@@ -1,15 +1,14 @@
 import { useEffect, useState } from "react";
-import { Box } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 
 import type { Song } from "@/types/entities";
 import { useSongs } from "@/hooks";
 
 import MainBlock from "@/shared-components/MainBlock";
-import PageDescription from "@/shared-components/PageDescription";
 import ConfirmDialog from "@/shared-components/modals/ConfirmDialog";
 import ErrorDialog from "@/shared-components/modals/ErrorDialog";
+import SongModal from "@/pages/share-feature-components/SongModal";
 import ActionToolbar from "./components/ActionToolbar";
-import SongModal from "./components/SongModal";
 import SongCard from "./components/SongCard";
 import EmptyStorage from "@/shared-components/EmptyStorage";
 import SongCardSkeleton from "./components/SongCardSkeleton";
@@ -52,7 +51,7 @@ function Home() {
         setIsOpenSongModal(true);
     }
 
-    function handleOnSaveSongModal(data: Omit<Song, "id" | "notes">) {
+    function handleOnSaveSong(data: Omit<Song, "id" | "notes">) {
         if (selectedSong) {
             return saveSong(selectedSong.id, data);
         }
@@ -82,11 +81,15 @@ function Home() {
 
     return (
         <Box>
-            {/** page description */}
-            <PageDescription
-                title="Welcome to MIDI"
-                content="MIDI Editor - a web application similar to a piano roll MIDI editor where users can create, visualize, and manage musical notes placed at specific time points across multiple tracks (similar to FL Studio, Ableton Live, or GarageBand's piano roll view)."
-            />
+            {/** Page Description */}
+            <MainBlock sx={{ mt: 0, mb: 10 }}>
+                <Typography variant="h5" gutterBottom>
+                    Welcome to MIDI
+                </Typography>
+                <Typography variant="body1" align="justify">
+                    MIDI Editor - a web application similar to a piano roll MIDI editor where users can create, visualize, and manage musical notes placed at specific time points across multiple tracks (similar to FL Studio, Ableton Live, or GarageBand's piano roll view).
+                </Typography>
+            </MainBlock>
 
             {/** Songs Management */}
             <MainBlock>
@@ -127,7 +130,7 @@ function Home() {
                     setIsOpenSongModal(false);
                     setSelectedSong(null);
                 }}
-                onSave={handleOnSaveSongModal}
+                onSave={handleOnSaveSong}
             />
 
             <ConfirmDialog

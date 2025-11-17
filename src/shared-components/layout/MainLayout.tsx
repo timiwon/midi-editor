@@ -18,6 +18,26 @@ const customTheme = createTheme({
             fontSize: '0.8rem',
         },
     },
+    components: {
+        MuiTableCell: {
+            styleOverrides: {
+                root: {
+                    backgroundColor: grey[200],
+                    '&.MuiTableCell-head.major-cell': {
+                        backgroundColor: grey[500],
+                        color: '#fff'
+                    },
+                    '&.MuiTableCell-body': {
+                        backgroundColor: grey[50],
+                        borderBottom: 'none',
+                    },
+                    '&.MuiTableCell-body.major-cell': {
+                        backgroundColor: grey[200],
+                    },
+                }
+            }
+        }
+    }
 });
 
 interface LayoutProps {

@@ -1,4 +1,4 @@
-import type { Song } from "./entities";
+import type { Note, Song } from "./entities";
 
 export type BaseServiceInterface<T> = {
     getList(): Promise<T[]>;
@@ -17,11 +17,20 @@ export type BaseServiceInterface<T> = {
     ): void;
 }
 
-export type SongServiceInterface = Omit<BaseServiceInterface<Song>, "getList"> & {
+export type SongServiceInterface = Omit<BaseServiceInterface<Song>, "getList" | "create"> & {
     getList(
         searchValue: string
     ): Promise<Song[]>;
     create(
-        data: Omit<Song, "id" | "notes" | "trackLabels">,
+        data: Omit<Song, "id" | "notes">,
+    ): Promise<Song>;
+    saveNote(
+        songId: string,
+        oldData: Note,
+        newData: Note,
+    ): Promise<Song>;
+    deleteNote(
+        songId: string,
+        noteData: Note,
     ): Promise<Song>;
 }

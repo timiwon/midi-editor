@@ -10,7 +10,14 @@ export const getErrorMessage = (error: unknown, defaultMessage: string): string 
         return defaultMessage;
     }
 
-    return (typeof error === 'object' && 'message' in error) ||
-        error instanceof Error ? error.message as string : defaultMessage;
+    if (typeof error === 'string' || error instanceof String) {
+        return error as string;
+    }
+
+    if ((typeof error === 'object' && 'message' in error) || error instanceof Error) {
+        return error.message as string
+    }
+
+    return defaultMessage;
 };
 

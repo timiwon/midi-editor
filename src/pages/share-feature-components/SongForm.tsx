@@ -96,7 +96,7 @@ const SongForm: React.FC<SongFormProps> = ({
             <Input name="name" label="Name" />
             <Input name="description" label="Description" />
             <NumberInput name="totalDuration" label="Duration" />
-            <AutocompleteChip name="tags" label="Tags" options={['super junior', 'dragon', 'britney spears']}/>
+            <AutocompleteChip name="tags" label="Tags" options={['super junior', 'd. dragon', 'britney spears']}/>
             <SongTrackLabelsField />
             <Box sx={{
                 display: 'flex',

@@ -1,34 +1,32 @@
 import React from 'react';
 import type { MouseEvent } from 'react';
-import { Box, TextField, Typography } from "@mui/material";
+import { Box, List, ListItem, Typography } from "@mui/material";
 import AddIcon from '@mui/icons-material/Add';
 
 import { useUtils } from "@/hooks";
 
-import Button from "@/shared-components/Button"
+import Button from "@/shared-components/Button";
 
 interface ActionToolbarProps {
-    onCreateBtnClick: (e: MouseEvent<HTMLButtonElement>) => void;
-    onSearch: (value: string) => void;
+    onAddNoteBtnClick: (e: MouseEvent<HTMLButtonElement>) => void;
 }
 const ActionToolbar: React.FC<ActionToolbarProps> = ({
-    onCreateBtnClick,
-    onSearch
+    onAddNoteBtnClick,
 }) => {
     const { isMobile } = useUtils();
 
     const gridTemplateAreas = !isMobile ?
-        `"main main . sidebar"` :
+        `
+            "main main . sidebar"
+            "content content content content"
+        ` :
         `
             "main main main main"
+            "content content content content"
             ". . . sidebar"
         `;
 
-    function handleSearch(e: React.ChangeEvent<HTMLInputElement>) {
-        onSearch(e.target.value);
-    }
-
-    return (<Box>
+    return (
         <Box
             sx={{
                 display: 'grid',
@@ -40,12 +38,8 @@ const ActionToolbar: React.FC<ActionToolbarProps> = ({
         >
             <Box sx={{ gridArea: 'main' }}>
                 <Typography variant="h5" gutterBottom>
-                    Songs Management
+                    Notes Management
                 </Typography>
-                <Typography variant="body1" align='justify'>
-                    Create, edit, delete, and list MIDI songs/sequences
-                </Typography>
-
             </Box>
             <Box sx={{
                 gridArea: 'sidebar',
@@ -54,22 +48,25 @@ const ActionToolbar: React.FC<ActionToolbarProps> = ({
             }}>
                 <Button
                     icon={<AddIcon/>}
-                    onClick={onCreateBtnClick}
+                    onClick={onAddNoteBtnClick}
                 >
-                    {isMobile ? 'Create' : 'Create Song'}
+                    {isMobile ? 'Create' : 'Create Note'}
                 </Button>
+            </Box>
+            <Box sx={{ gridArea: 'content' }}>
+                <List sx={{ listStyleType: 'disc', ml: 5 }}>
+                    <ListItem sx={{ display: 'list-item' }}>
+                        Add notes via form (track, time, title, description, color)
+                    </ListItem>
+                    <ListItem sx={{ display: 'list-item' }}>
+                        Edit and delete existing notes
+                    </ListItem>
+                </List>
+
             </Box>
         </Box>
 
-        <Box sx={{ mt: 2 }}>
-            <TextField
-                className='mb-5 w-full md:w-1/2'
-                label="Search"
-                variant="outlined"
-                onChange={handleSearch}
-            />
-        </Box>
-    </Box>)
+    )
 }
 
 export default ActionToolbar

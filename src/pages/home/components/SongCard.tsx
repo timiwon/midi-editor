@@ -46,13 +46,19 @@ const SongCard: React.FC<SongCardProps> = ({
                     },
                     '& .MuiIconButton-root': {
                         color: '#fff'
+                    },
+                    '& .MuiTypography-root': {
+                        color: '#fff'
                     }
                 },
             }}
             onClick={() => navigate(PATH.SONG_DETAIL.replace(':songId', data.id))}
         >
-            <Box sx={{ pt: 2, pr: 2, pl: 2 }}>
-                <Box sx={{ mb: 2 }}>
+            <Box className="select-none" sx={{ pt: 2, pr: 2, pl: 2 }}>
+                {/**
+                 * Header
+                 */}
+                <Box sx={{ mb: 3 }}>
                     <Stack
                         direction="row"
                         sx={{ justifyContent: 'space-between', alignItems: 'center' }}
@@ -61,18 +67,20 @@ const SongCard: React.FC<SongCardProps> = ({
                             {data.name}
                         </Typography>
                         <Chip
-                            className="select-none"
                             sx={{ borderRadius: 1 }}
                             variant="outlined"
                             label={`${data.totalDuration}s`}
                             size="medium"
                         />
                     </Stack>
+                    <Typography variant="body2" sx={{ mb: 1 }}>
+                        last modified - {moment(data.updatedAt).fromNow()}
+                    </Typography>
+
                     <Grid container spacing={1}>
                         {data.tags && data.tags.map(tag =>
                             <Grid>
                                 <Chip
-                                    className="select-none"
                                     sx={{ borderRadius: 1, pr: 1 }}
                                     variant="outlined"
                                     label={`${tag}`}
@@ -81,15 +89,21 @@ const SongCard: React.FC<SongCardProps> = ({
                             </Grid>
                         )}
                     </Grid>
-                    <Typography variant="body2" sx={{ mb: 2 }}>
-                        last modified - {moment(data.updatedAt).fromNow()}
-                    </Typography>
+                </Box>
+
+                {/**
+                 * Description
+                 */}
+                <Box sx={{ mb: 5 }}>
                     <Typography variant="body1">
                         {data.description}
                     </Typography>
                 </Box>
 
 
+                {/**
+                 * Track Labels
+                 */}
                 {data.trackLabels && data.trackLabels.length > 0 && (
                     <Box sx={{ mb: 2 }}>
                         <Stack direction="row" spacing={1}>
@@ -106,6 +120,9 @@ const SongCard: React.FC<SongCardProps> = ({
                     </Box>
                 )}
 
+                {/**
+                 * Action Bar
+                 */}
                 <Divider />
                 <Grid container>
                     <Grid

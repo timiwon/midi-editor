@@ -1,0 +1,94 @@
+import React from 'react';
+import * as Yup from 'yup';
+import { useForm, FormProvider } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
+import { Button, Box } from '@mui/material';
+
+import type { Note } from '@/types/entities';
+
+import { Input, NumberInput } from '@/shared-components/form';
+
+interface NoteFormProps {
+    maxTime: number;
+    data: Note | null;
+    onSubmit: (values: Note) => void;
+}
+const NoteForm: React.FC<NoteFormProps> = ({
+    maxTime,
+    data,
+    onSubmit
+}) => {
+    const validationSchema = Yup.object().shape({
+        track: Yup.number()
+            .min(1, 'Minimum is 1!')
+            .max(8, 'Maximum is 8!')
+            .required('Required'),
+        time: Yup.number()
+            .min(0, 'Minimum is 0!')
+            .max(maxTime, `Maximum is ${maxTime}s!`)
+            .test(
+                'time-step',
+                'Time step is 0.5s!',
+                (value) => (value as number) % 0.5 === 0
+            )
+            .required('Required'),
+        title: Yup.string()
+            .min(2, 'Required at least 2 characters!')
+            .max(50, 'Max length is 50 characters!')
+            .required('Required'),
+        description: Yup.string()
+            .min(2, 'Required at least 2 characters!')
+            .max(500, 'Max length is 500 characters!')
+            .required('Required'),
+        color: Yup.string()
+            .min(2, 'Required at least 2 characters!')
+            .max(50, 'Max length is 50 characters!')
+            .required('Required'),
+        icon: Yup.string()
+            .max(50, 'Max length is 50 characters!')
+            .required('Required'),
+    });
+
+    const methods = useForm({
+        defaultValues: {
+            track: data ? data.track : 1,
+            time: data ? data.time : 0,
+            title: data ? data.title : '',
+            description: data ? data.description : '',
+            color: data ? data.color : '',
+            icon: data ? data.icon : '',
+        },
+        mode: 'onChange',
+        resolver: yupResolver(validationSchema)
+    });
+
+    function handleSubmit(values: Note) {
+        onSubmit(values);
+    }
+
+    return (
+        <FormProvider {...methods}>
+            <NumberInput name="track" label="Track" />
+            <NumberInput name="time" label="Time" />
+            <Input name="title" label="Title" />
+            <Input name="description" label="Description" />
+            <Input name="color" label="Color" />
+            <Input name="icon" label="Icon" />
+            <Box sx={{
+                display: 'flex',
+                justifyContent: 'flex-end'
+            }}>
+                <Button
+                    type="submit"
+                    variant="contained"
+                    color="primary"
+                    onClick={methods.handleSubmit(handleSubmit)}
+                >
+                    Save
+                </Button>
+            </Box>
+        </FormProvider>
+    );
+};
+
+export default NoteForm;
