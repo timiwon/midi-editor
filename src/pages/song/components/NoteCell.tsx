@@ -66,6 +66,16 @@ const NoteCell: React.FC<NoteCellProps> = ({ trackIndex, rangeTime, notes, mainC
         }
     }
 
+    async function handleDelete() {
+        if (!song || !deleteNote) {
+            return
+        }
+
+        await deleteNote(song.id, selectedNote as Note);
+        setSelectedNote(null);
+        setIsOpenNoteModal(false);
+    }
+
     useEffect(() => {
         if (!notes) {
             return
@@ -106,6 +116,7 @@ const NoteCell: React.FC<NoteCellProps> = ({ trackIndex, rangeTime, notes, mainC
                 setIsOpenNoteModal(false);
             }}
             onSave={handleEditNote}
+            onDelete={handleDelete}
         />}
     </>)
 };

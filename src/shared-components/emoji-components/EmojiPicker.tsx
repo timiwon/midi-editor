@@ -24,8 +24,23 @@ const EmojiPicker: React.FC<EmojiPickerProps> = ({name, label}) => {
                 defaultValue="#ffffff"
                 render={({ field }) => (<>
                     <Typography>{label}: <EmojiIcon unified={field.value} size={25}/></Typography>
-                    <Button onClick={() => field.onChange('')}>clear emoji</Button>
-                    <EmojiPickerReact
+                    <Button
+                        variant='outlined'
+                        color='error'
+                        sx={{
+                            borderBottomLeftRadius: 0,
+                            borderBottomRightRadius: 0,
+                        }}
+                        onClick={() => field.onChange('')}
+                    >
+                        clear emoji
+                    </Button>
+                    <EmojiPickerReact width={'100%'}
+                        style={{
+                            borderTopLeftRadius: 0,
+                            borderTopRightRadius: 0,
+                            borderTop: 0
+                        }}
                         skinTonesDisabled={true}
                         onEmojiClick={(emojiObject) => field.onChange(emojiObject.emoji)}
                     />

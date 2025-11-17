@@ -22,11 +22,11 @@ const NoteContainer: React.FC<NoteContainerProps> = ({song}) => {
     const maxDuration = notes ? notes.reduce((max, note) => {
         return note.time > max ? note.time : max;
     }, 0) : 1;
-    const rows: number[] = Array.from({ length: Math.round(maxDuration + 5 / 5) }); // time interval height 40-60px per 5 seconds
+    const rows: number[] = Array.from({ length: Math.round(maxDuration/5) + 5}); // time interval height 40-60px per 5 seconds
     let toggleBodyCellClass = 'major-cell';
 
     return (
-        <TableContainer sx={{ minWidth: 80, maxWidth: `${trackLabels?.length * cellWidth + timeCellWidth}px` }}>
+        <TableContainer sx={{ minWidth: 80, maxWidth: `${trackLabels?.length * cellWidth + timeCellWidth}px`, mb: 5 }}>
             <Table stickyHeader={true}>
                 <TableHead>
                     <TableRow>

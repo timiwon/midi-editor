@@ -1,7 +1,10 @@
 import type { MouseEvent } from 'react';
-import { Button as MuiButton } from "@mui/material";
 
 import { useUtils } from "@/hooks";
+
+import {
+    Button as StyledButton
+} from "./styled-components"
 
 interface ButtonProps {
     children?: React.ReactNode;
@@ -14,23 +17,23 @@ const Button: React.FC<ButtonProps> = ({ children, icon, onClick }) => {
 
     return (<>
         {isMobile && (
-            <MuiButton
+            <StyledButton
                 size='small'
                 variant="contained"
                 onClick={onClick}
             >
                 {children}
-            </MuiButton>
+            </StyledButton>
         )}
         {!isMobile && (
-            <MuiButton
+            <StyledButton
                 size='small'
                 variant="contained"
                 startIcon={icon}
                 onClick={onClick}
             >
                 {children}
-            </MuiButton>
+            </StyledButton>
         )}
     </>)
 

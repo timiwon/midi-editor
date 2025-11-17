@@ -2,23 +2,26 @@ import React from 'react';
 import * as Yup from 'yup';
 import { useForm, FormProvider } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { Button, Box } from '@mui/material';
+import { Box } from '@mui/material';
 
 import type { Note } from '@/types/entities';
 
 import { Input, NumberInput } from '@/shared-components/form';
 import ColorPicker from '@/shared-components/form/ColorPicker';
 import EmojiPicker from '@/shared-components/emoji-components/EmojiPicker';
+import { Button } from '@/shared-components/styled-components';
 
 interface NoteFormProps {
     maxTime: number;
     data: Note | null;
     onSubmit: (values: Note) => void;
+    onDelete?: () => void;
 }
 const NoteForm: React.FC<NoteFormProps> = ({
     maxTime,
     data,
-    onSubmit
+    onSubmit,
+    onDelete
 }) => {
     const validationSchema = Yup.object().shape({
         track: Yup.number()
@@ -43,7 +46,6 @@ const NoteForm: React.FC<NoteFormProps> = ({
             .max(500, 'Max length is 500 characters!')
             .required('Required'),
         color: Yup.string()
-            .min(2, 'Required at least 2 characters!')
             .max(50, 'Max length is 50 characters!')
             .required('Required'),
         icon: Yup.string()
@@ -80,6 +82,17 @@ const NoteForm: React.FC<NoteFormProps> = ({
                 display: 'flex',
                 justifyContent: 'flex-end'
             }}>
+                {onDelete &&
+                    <Button
+                        type="submit"
+                        variant="contained"
+                        color="error"
+                        sx={{ mr: 1 }}
+                        onClick={onDelete}
+                    >
+                        Delete
+                    </Button>
+                }
                 <Button
                     type="submit"
                     variant="contained"

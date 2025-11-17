@@ -8,7 +8,9 @@ const SongContext = createContext<Partial<UseSongValues>>({
     // eslint-disable-next-line
     saveSong: async (id: string, data: Omit<Song, "id" | "notes">) => {},
     // eslint-disable-next-line
-    saveNote: async (songId: string, oldData: Note | null, newData: Note) => {}
+    saveNote: async (songId: string, oldData: Note | null, newData: Note) => {},
+    // eslint-disable-next-line
+    deleteNote: async (songId: string, noteData: Note) => {}
 });
 
 export default SongContext;

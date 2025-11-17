@@ -6,8 +6,9 @@ interface AutocompleteChipProps {
     name: string;
     label: string;
     options: string[];
+    limitTags?: number;
 }
-export const AutocompleteChip: React.FC<AutocompleteChipProps> = ({ name, label, options }) => {
+export const AutocompleteChip: React.FC<AutocompleteChipProps> = ({ name, label, options, limitTags = 2 }) => {
     const { control, formState: { errors } } = useFormContext();
 
     return (
@@ -15,7 +16,7 @@ export const AutocompleteChip: React.FC<AutocompleteChipProps> = ({ name, label,
             sx={{width: '100%'}}
             variant="standard"
             margin="normal"
-            error={Boolean(errors?.[name]?.message)}
+            error={!!errors?.[name]?.message}
         >
             <Controller
                 name={name}
@@ -25,14 +26,26 @@ export const AutocompleteChip: React.FC<AutocompleteChipProps> = ({ name, label,
                         {...field}
                         multiple
                         freeSolo
+                        limitTags={limitTags} 
                         options={options}
                         renderValue={(value: readonly string[], getItemProps) =>
-                            value.map((option: string, index: number) => {
+                            <>
+                                {value.slice(0, 2).map((option, index) => (
+                                    <Chip
+                                        label={option}
+                                        {...getItemProps({ index })}
+                                        key={index}
+                                        sx={{ borderRadius: 1 }}
+                                    />
+                                ))}
+                                {value.length > 2 && `+${value.length - 2}`}
+                            </>
+                            /*value.map((option: string, index: number) => {
                                 const { key, ...itemProps } = getItemProps({ index });
                                 return (
                                     <Chip variant="filled" label={option} key={key} {...itemProps} sx={{ borderRadius: 1 }} />
                                 );
-                            })
+                            })*/
                         }
                         renderInput={(params) => (
                             <TextField

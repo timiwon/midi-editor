@@ -1,51 +1,9 @@
 import React from 'react';
 import type { ReactNode } from 'react';
 import { AppBar, Toolbar, Typography, Container, Box } from '@mui/material';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { pink, grey } from '@mui/material/colors';
+import { ThemeProvider } from '@mui/material/styles';
 
-const customTheme = createTheme({
-    palette: {
-        primary: pink,
-        secondary: pink,
-        background: {
-            paper: pink[50],
-        },
-    },
-    typography: {
-        body2: {
-            color: grey[500],
-            fontSize: '0.8rem',
-        },
-    },
-    components: {
-        MuiSkeleton: {
-            styleOverrides: {
-                root: {
-                    backgroundColor: pink[50],
-                }
-            }
-        },
-        MuiTableCell: {
-            styleOverrides: {
-                root: {
-                    backgroundColor: grey[200],
-                    '&.MuiTableCell-head.major-cell': {
-                        backgroundColor: grey[500],
-                        color: '#fff'
-                    },
-                    '&.MuiTableCell-body': {
-                        backgroundColor: grey[50],
-                        borderBottom: 'none',
-                    },
-                    '&.MuiTableCell-body.major-cell': {
-                        backgroundColor: grey[200],
-                    },
-                }
-            }
-        }
-    }
-});
+import { mainTheme } from '@/lib/themes';
 
 interface LayoutProps {
     children: ReactNode;
@@ -53,7 +11,7 @@ interface LayoutProps {
 }
 
 const MainLayout: React.FC<LayoutProps> = ({ children, title = 'MIDI - EDITOR' }) => (
-    <ThemeProvider theme={customTheme}>
+    <ThemeProvider theme={mainTheme}>
         <Box sx={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
             <AppBar position="fixed">
                 <Toolbar>

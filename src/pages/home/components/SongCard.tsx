@@ -1,11 +1,12 @@
 import React from "react";
 import { useNavigate } from 'react-router-dom';
-import { Box, Card, Chip, Divider, Grid, IconButton, Stack, Typography, useTheme } from "@mui/material";
+import { Box, Chip, Divider, Grid, IconButton, Stack, Typography } from "@mui/material";
 import { Edit, Delete } from '@mui/icons-material';
 
 import type { Song } from "@/types/entities";
 import { PATH } from "@/lib/paths";
 import moment from "moment";
+import { Card } from "@/shared-components/styled-components";
 
 interface SongCardProps {
     data: Song
@@ -18,7 +19,6 @@ const SongCard: React.FC<SongCardProps> = ({
     onDeleteClick
 }) => {
     const navigate = useNavigate();
-    const theme = useTheme();
 
     function handleEditClick(e: React.MouseEvent<HTMLButtonElement>) {
         e.stopPropagation();
@@ -33,25 +33,6 @@ const SongCard: React.FC<SongCardProps> = ({
     return (
         <Card
             className="mb-5 w-full md:w-1/2 cursor-pointer"
-            sx={{
-                '&:hover': {
-                    bgcolor: theme.palette.primary.light,
-                    color: '#fff',
-                    boxShadow: '0px 4px 20px rgba(0, 0, 0, 0.1)',
-                    '& .MuiChip-label': {
-                        color: '#fff',
-                    },
-                    '& .MuiDivider-root': {
-                        borderColor: '#fff'
-                    },
-                    '& .MuiIconButton-root': {
-                        color: '#fff'
-                    },
-                    '& .MuiTypography-root': {
-                        color: '#fff'
-                    }
-                },
-            }}
             onClick={() => navigate(PATH.SONG_DETAIL.replace(':songId', data.id))}
         >
             <Box className="select-none" sx={{ pt: 2, pr: 2, pl: 2 }}>

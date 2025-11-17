@@ -7,7 +7,7 @@ interface ColorPickerProps {
     name: string;
     label: string;
 }
-const ColorPicker: React.FC<ColorPickerProps> = ({name, label}) => {
+const ColorPicker: React.FC<ColorPickerProps> = ({ name, label }) => {
     const { control, formState: { errors } } = useFormContext();
 
     return (
@@ -15,9 +15,10 @@ const ColorPicker: React.FC<ColorPickerProps> = ({name, label}) => {
             sx={{ width: '100%' }}
             variant="standard"
             margin="normal"
-            error={Boolean(errors?.[name]?.message)}
+            error={!!errors?.[name]?.message}
         >
-            <Typography>{label}</Typography>
+            <Typography color={`${errors?.[name]?.message ? 'error' : ''}`}>{label}</Typography>
+            {errors[name] && <FormHelperText>{(errors[name].message as string).toString()}</FormHelperText>}
             <Controller
                 name={name}
                 control={control}
@@ -29,7 +30,6 @@ const ColorPicker: React.FC<ColorPickerProps> = ({name, label}) => {
                     />
                 )}
             />
-            {errors[name] && <FormHelperText>{(errors[name].message as string).toString()}</FormHelperText>}
         </FormControl>
     );
 };

@@ -12,6 +12,7 @@ interface NoteModalProps {
     maxTime: number;
     onClose: () => void; 
     onSave: (values: Note) => void;
+    onDelete?: () => void;
 }
 const NoteModal: React.FC<NoteModalProps> = ({
     open,
@@ -19,7 +20,8 @@ const NoteModal: React.FC<NoteModalProps> = ({
     data,
     maxTime,
     onClose,
-    onSave
+    onSave,
+    onDelete
 }) => {
 
     function handleSubmit (values: Note) {
@@ -33,7 +35,7 @@ const NoteModal: React.FC<NoteModalProps> = ({
             title={title}
             description={''}
         >
-            <NoteForm maxTime={maxTime} data={data} onSubmit={handleSubmit} />
+            <NoteForm maxTime={maxTime} data={data} onSubmit={handleSubmit} onDelete={onDelete}/>
         </BaseModal>
     )
 }

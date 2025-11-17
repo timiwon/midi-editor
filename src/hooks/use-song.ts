@@ -12,7 +12,7 @@ export interface UseSongValues {
     loadSong: DebouncedFunc<() => Promise<void>>;
     saveSong: (id: string, data: Omit<Song, "id" | "notes">) => Promise<void>;
     saveNote: (songId: string, oldData: Note | null, newData: Note) => Promise<void>;
-    deleteNote: (songId: string, newData: Note) => Promise<void>;
+    deleteNote: (songId: string, noteData: Note) => Promise<void>;
     deleteSong: (id: string) => Promise<void>;
 }
 

@@ -2,11 +2,12 @@ import React from 'react';
 import * as Yup from 'yup';
 import { useForm, FormProvider } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { Button, Box } from '@mui/material';
+import { Box } from '@mui/material';
 
 import type { Song } from '@/types/entities';
 
 import { Input, NumberInput, AutocompleteChip } from '@/shared-components/form';
+import { Button } from "@/shared-components/styled-components";
 import SongTrackLabelsField from './SongTrackLabelsField';
 
 const validationSchema = Yup.object().shape({
