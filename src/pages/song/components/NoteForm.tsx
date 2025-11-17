@@ -38,15 +38,14 @@ const NoteForm: React.FC<NoteFormProps> = ({
             )
             .required('Required'),
         title: Yup.string()
-            .min(2, 'Required at least 2 characters!')
             .max(50, 'Max length is 50 characters!')
-            .required('Required'),
+            .optional(),
         description: Yup.string()
             .max(500, 'Max length is 500 characters!')
             .optional(),
         color: Yup.string()
             .max(50, 'Max length is 50 characters!')
-            .required('Required'),
+            .optional(),
         icon: Yup.string()
             .max(50, 'Max length is 50 characters!')
             .optional(),
@@ -61,14 +60,14 @@ const NoteForm: React.FC<NoteFormProps> = ({
             color: data ? data.color : '',
             icon: data ? data.icon : '',
         },
-        mode: 'onChange',
-        resolver: yupResolver(validationSchema)
+        mode: 'all',
+        resolver: yupResolver(validationSchema),
     });
 
     function handleSubmit(values: Note) {
         onSubmit(values);
     }
-
+    
     return (
         <FormProvider {...methods}>
             <NumberInput name="track" label="Track" />

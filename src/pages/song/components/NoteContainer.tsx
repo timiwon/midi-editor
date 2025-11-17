@@ -19,10 +19,10 @@ const NoteContainer: React.FC<NoteContainerProps> = ({song}) => {
     const timeCellWidth = 60;
     const cellWidth = isMobile ? 80 : isTablet ? 100 : 120; // Track width 80-120px (responsive)
     const cellHeight = isMobile ? 40 : 60;
-    const maxDuration = notes ? notes.reduce((max, note) => {
+    let maxDuration = notes ? notes.reduce((max, note) => {
         return note.time > max ? note.time : max;
     }, 0) : 1;
-    const rows: number[] = Array.from({ length: Math.round(maxDuration/5) + 5}); // time interval height 40-60px per 5 seconds
+    const rows: number[] = Array.from({ length: Math.round(maxDuration/5) + 3}); // time interval height 40-60px per 5 seconds
     let toggleBodyCellClass = 'major-cell';
 
     return (

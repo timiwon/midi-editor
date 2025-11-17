@@ -22,6 +22,7 @@ const NoteCell: React.FC<NoteCellProps> = ({ trackIndex, rangeTime, notes, mainC
             
     const [selectedNote, setSelectedNote] = useState<Note | null>(null);
     const [isOpenNoteModal, setIsOpenNoteModal] = useState(false);
+    const [isOpenCreateNoteModal, setIsOpenCreateNoteModal] = useState(false);
 
     const chunk = {
         length: 10,
@@ -66,6 +67,33 @@ const NoteCell: React.FC<NoteCellProps> = ({ trackIndex, rangeTime, notes, mainC
         }
     }
 
+    async function handleBlankTimeInfoClick(time: number) {
+        setSelectedNote({
+            track: trackIndex,
+            time: time,
+            title: '',
+            description: '',
+            color: '',
+            icon: ''
+        });
+        setIsOpenCreateNoteModal(true);
+    }
+    
+    async function handleCreateDataWithTimeInfo(data: Note) {
+        if (!song || !saveNote) {
+            return;
+        }
+
+        try {
+            await saveNote(song.id, null, data);
+            setSelectedNote(null);
+            setIsOpenCreateNoteModal(false);
+        } catch (error) {
+            // do nothing
+            console.log(error)
+        }
+    }
+
     async function handleDelete() {
         if (!song || !deleteNote) {
             return
@@ -96,9 +124,11 @@ const NoteCell: React.FC<NoteCellProps> = ({ trackIndex, rangeTime, notes, mainC
                 <NotePoint
                     key={key}
                     position={key}
+                    rangeTime={rangeTime}
                     list={list}
                     chunk={chunk}
                     onEditNoteClick={handleEditNoteClick}
+                    onBlankTimeClick={handleBlankTimeInfoClick}
                 />
             )}
         </Box>
@@ -107,10 +137,25 @@ const NoteCell: React.FC<NoteCellProps> = ({ trackIndex, rangeTime, notes, mainC
          * Modal for create note with initial data
          */}
         {song && <NoteModal
-            open={isOpenNoteModal}
+            open={isOpenCreateNoteModal}
             data={selectedNote}
             maxTime={song.totalDuration}
             title={'Add Note'}
+            onClose={() => {
+                setSelectedNote(null);
+                setIsOpenCreateNoteModal(false);
+            }}
+            onSave={handleCreateDataWithTimeInfo}
+        />}
+
+        {/**
+         * Modal for edit note
+         */}
+        {song && <NoteModal
+            open={isOpenNoteModal}
+            data={selectedNote}
+            maxTime={song.totalDuration}
+            title={'Edit Note'}
             onClose={() => {
                 setSelectedNote(null);
                 setIsOpenNoteModal(false);

@@ -60,7 +60,6 @@ function SongPage() {
             setIsOpenIOModal(false);
             setSelectedNote(null);
         } catch (error) {
-            console.log(error)
             // do nothing
         }
 

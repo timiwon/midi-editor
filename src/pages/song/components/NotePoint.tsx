@@ -7,31 +7,38 @@ import { useUtils } from "@/hooks";
 import EmojiIcon from "@/shared-components/emoji-components/EmojiIcon";
 
 interface NotePointProps {
+    rangeTime: number[];
     position: number;
-    list: {[key: number]: Note};
+    list: { [key: number]: Note };
     chunk: {
         length: number;
         width: number;
         height: number;
     };
     onEditNoteClick: (noteData: Note) => void;
+    onBlankTimeClick: (time: number) => void;
 }
-const NotePoint: React.FC<NotePointProps> = ({ position, list, chunk, onEditNoteClick }) => {
+const NotePoint: React.FC<NotePointProps> = ({ position, rangeTime, list, chunk, onEditNoteClick, onBlankTimeClick }) => {
     const theme = useTheme();
     const { isMobile } = useUtils();
     const noteSize = isMobile ? 16 : 24; // Note points as colored circular dots (16-24px) at correct (track, time) positions
 
-    function isHexColor(color: string) {
+    function isHexColor(color: string | undefined) {
+        if (!color) {
+            return false
+        }
+
         return /^#([0-9A-F]{3}|[0-9A-F]{4}|[0-9A-F]{6}|[0-9A-F]{8})$/i.test(color);
     }
 
-    function getNoteColor(color: string) {
+    function getNoteColor(color: string | undefined) {
         return isHexColor(color) ? color : theme.palette.primary.dark;
     }
 
     if (position in list) {
         return (
             <Tooltip
+                placement="left"
                 arrow
                 slotProps={{
                     popper: {
@@ -39,7 +46,7 @@ const NotePoint: React.FC<NotePointProps> = ({ position, list, chunk, onEditNote
                             {
                                 name: 'offset',
                                 options: {
-                                    offset: [0, 20],
+                                    offset: [0, -1],
                                 },
                             },
                         ],
@@ -49,7 +56,7 @@ const NotePoint: React.FC<NotePointProps> = ({ position, list, chunk, onEditNote
                     <Typography variant="body1">
                         {list[position].title}
                         {' - '}
-                        <Typography variant="body2" component='span'>{list[position].time}s</Typography>
+                        <Typography variant="body1" component='span'>{list[position].time}s</Typography>
                     </Typography>
                     <Typography variant="body1" whiteSpace={'pre-wrap'}>{list[position].description}</Typography>
                 </Box>}
@@ -57,7 +64,7 @@ const NotePoint: React.FC<NotePointProps> = ({ position, list, chunk, onEditNote
                 <Box>
                     {list[position].icon && <EmojiIcon
                         sx={{
-                            position: 'absolute',
+                            position: 'relative',
                             width: `${noteSize}px`,
                             height: `${noteSize}px`,
                             '&:hover': {
@@ -71,7 +78,7 @@ const NotePoint: React.FC<NotePointProps> = ({ position, list, chunk, onEditNote
                     {!list[position].icon && <Box
                         className={`note-${position}`}
                         sx={{
-                            position: 'absolute',
+                            position: 'relative',
                             width: `${noteSize}px`,
                             height: `${noteSize}px`,
                             borderRadius: '50%',
@@ -87,15 +94,38 @@ const NotePoint: React.FC<NotePointProps> = ({ position, list, chunk, onEditNote
         );
     }
 
-    return (<Box
-        sx={{
-            position: 'relative',
-            width: `1px`,
-            m: '0 10px',
-            height: `${chunk.height}px`,
-        }}
-    ></Box>);
+    return (
+        <Tooltip
+            placement="left"
+            arrow
+            slotProps={{
+                popper: {
+                    modifiers: [
+                        {
+                            name: 'offset',
+                            options: {
+                                offset: [0, -1],
+                            },
+                        },
+                    ],
+                },
+            }}
+            title={<Box>
+                <Typography variant="body1">
+                    {(position/2 + rangeTime[0])}s
+                </Typography>
+            </Box>}
+        >
 
+            <Box
+                sx={{
+                    width: `${noteSize}px`,
+                    height: `${chunk.height}px`,
+                }}
+                onClick={() => onBlankTimeClick((position/2 + rangeTime[0]))}
+            ></Box>
+        </Tooltip>
+    );
 };
 
 export default NotePoint;

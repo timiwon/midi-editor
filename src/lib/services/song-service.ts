@@ -30,7 +30,9 @@ export class SongService implements SongServiceInterface {
     }
 
     async importSong(songId: string, data: string): Promise<Song> {
-        const song = await this.repo.findById(songId);
+        // validate exists song
+        await this.repo.findById(songId);
+        const parsedData = JSON.parse(data);
 
         const validationSchema = Yup.object().shape({
             name: Yup.string()
@@ -59,8 +61,36 @@ export class SongService implements SongServiceInterface {
                     .required('TrackLabel is required!'),
                 )
                 .required('TrackLabel is required!'),
+            notes: Yup.array()
+                .of(Yup.object().shape({
+                    track: Yup.number()
+                        .min(1, 'Note Track required at least 1!')
+                        .max(parsedData.trackLabels?.length, `Note track is out of TrackLabels. Maximum is ${parsedData.trackLabels?.length}!`)
+                        .required('Note Track Required'),
+                    time: Yup.number()
+                        .min(0, 'Note time required at least 0s!')
+                        .max(parsedData.totalDuration??0, `The duration of song is ${parsedData.totalDuration??0}s!`)
+                        .test(
+                            'time-step',
+                            'Time step is 0.5s!',
+                            (value) => (value as number) % 0.5 === 0
+                        )
+                        .required('Note time is required!'),
+                    title: Yup.string()
+                        .max(50, 'TrackTitle exceeds limit 50 characters!')
+                        .optional(),
+                    description: Yup.string()
+                        .max(500, 'TrackTitle exceeds limit 500 characters!')
+                        .optional(),
+                    color: Yup.string()
+                        .max(50, 'TrackColor exceeds limit 50 characters!')
+                        .optional(),
+                    icon: Yup.string()
+                        .max(50, 'TrackIcon exceeds limit 50 characters!')
+                        .optional(),
+                }).required('Required'))
+                .optional(),
         }).required();
-        const parsedData = JSON.parse(data);
 
         // Throw on the first error or collect and return all
         const validatedData = await validationSchema.validate(parsedData, { abortEarly: false });
@@ -117,10 +147,11 @@ export class SongService implements SongServiceInterface {
         };
 
         if (oldData) {
+            const currentNotes = song && song.notes ? song.notes : [];
             data = {
                 ...song,
                 notes: [
-                    ...song.notes.map((note, index) => noteIndex === index ? newData : note),
+                    ...currentNotes,
                 ]
             };
         }

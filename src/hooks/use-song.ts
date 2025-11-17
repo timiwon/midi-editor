@@ -73,8 +73,10 @@ export const useSong = (songId: string | undefined): UseSongValues => {
         try {
             const updatedSong = await service.importSong(id, data);
             setSong(updatedSong);
-        } catch (err) {
-            setError(getErrorMessage(err, "Failed to import song."));
+        } catch (error) {
+            setError(getErrorMessage(error, "Failed to import song."));
+            setLoading(false);
+            throw(error)
         } finally {
             setLoading(false);
         }
@@ -88,7 +90,7 @@ export const useSong = (songId: string | undefined): UseSongValues => {
             setSong(song);
         } catch (err) {
             setError(getErrorMessage(err, "Failed to save note."));
-            throw(error);
+            throw (error);
         } finally {
             setLoading(false);
         }
@@ -102,7 +104,7 @@ export const useSong = (songId: string | undefined): UseSongValues => {
             setSong(song);
         } catch (err) {
             setError(getErrorMessage(err, "Failed to delete note."));
-            throw(error);
+            throw (error);
         } finally {
             setLoading(false);
         }

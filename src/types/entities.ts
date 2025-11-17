@@ -5,7 +5,7 @@ export type Song = {
     totalDuration: number;
     tags?: string[];
     trackLabels: string[];
-    notes: Note[];
+    notes?: Note[];
     createdAt: number;
     updatedAt: number;
 }
@@ -13,8 +13,8 @@ export type Song = {
 export type Note = {
     track: number;
     time: number;
-    title: string;
+    title?: string;
     description?: string;
-    color: string;
+    color?: string;
     icon?: string;
 }

@@ -60,7 +60,7 @@ const ActionToolbar: React.FC<ActionToolbarProps> = ({
                         Click directly on node for editing
                     </ListItem>
                     <ListItem sx={{ display: 'list-item' }}>
-                        Edit and delete existing notes
+                        Click on blank time for adding new note at that point
                     </ListItem>
                 </List>
 

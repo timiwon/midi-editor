@@ -79,7 +79,7 @@ const IOForm: React.FC<IOFormProps> = ({data, onSubmit}) => {
                     color="primary"
                     onClick={methods.handleSubmit(handleSubmit)}
                 >
-                    Save
+                    Import
                 </Button>
             </Box>
         </FormProvider>
