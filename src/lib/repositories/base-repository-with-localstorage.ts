@@ -3,12 +3,13 @@ import moment from "moment";
 
 import type { BaseRepositoryInterface } from "@/types/repositories";
 import { AvailableTableName, ErrorMessages, ErrorMessageTypes } from "../constant";
+import { DELAY_TIME_LOADING } from '@/lib/config';
 
 
 type ItemType<T> = (T & { id: string }) | null;
 export abstract class BaseRepository<T> implements BaseRepositoryInterface<T> {
     abstract table: AvailableTableName;
-    protected delayTimeDemo = 1000;
+    protected delayTimeDemo = DELAY_TIME_LOADING;
 
     findById(id: string): Promise<T> {
         return new Promise<T>((resolve, reject) => {
@@ -20,7 +21,9 @@ export abstract class BaseRepository<T> implements BaseRepositoryInterface<T> {
                 return reject(ErrorMessages[ErrorMessageTypes.not_found]);
             }
 
-            return resolve(result);
+            setTimeout(() => {
+                return resolve(result);
+            }, this.delayTimeDemo);
         });
     }
 
@@ -54,7 +57,7 @@ export abstract class BaseRepository<T> implements BaseRepositoryInterface<T> {
                 return reject(ErrorMessages[ErrorMessageTypes.not_found]);
             }
 
-            let result;
+            let result: T;
             const updatedList = [
                 ...list.map(obj => {
                     if (obj?.id === id) {
@@ -70,7 +73,9 @@ export abstract class BaseRepository<T> implements BaseRepositoryInterface<T> {
             ];
             localStorage.setItem(this.table, JSON.stringify(updatedList));
 
-            return resolve(result as T);
+            setTimeout(() => {
+                return resolve(result);
+            }, this.delayTimeDemo);
         });
     }
 
@@ -87,7 +92,9 @@ export abstract class BaseRepository<T> implements BaseRepositoryInterface<T> {
             list.splice(index, 1)
             localStorage.setItem(this.table, JSON.stringify(list));
 
-            return resolve(null)
+            setTimeout(() => {
+                return resolve(null)
+            }, this.delayTimeDemo);
         });
     }
 }

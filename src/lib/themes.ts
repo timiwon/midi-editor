@@ -17,9 +17,12 @@ export const mainTheme = createTheme({
     },
     components: {
         MuiSkeleton: {
+            defaultProps: {
+                animation: 'wave',
+            },
             styleOverrides: {
                 root: {
-                    backgroundColor: grey[50],
+                    backgroundColor: 'rgba(0, 0, 0, 0.1)',
                 }
             }
         },
@@ -40,6 +43,6 @@ export const mainTheme = createTheme({
                     },
                 }
             }
-        }
+        },
     }
 });

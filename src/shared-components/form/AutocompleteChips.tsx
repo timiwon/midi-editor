@@ -40,12 +40,6 @@ export const AutocompleteChip: React.FC<AutocompleteChipProps> = ({ name, label,
                                 ))}
                                 {value.length > 2 && `+${value.length - 2}`}
                             </>
-                            /*value.map((option: string, index: number) => {
-                                const { key, ...itemProps } = getItemProps({ index });
-                                return (
-                                    <Chip variant="filled" label={option} key={key} {...itemProps} sx={{ borderRadius: 1 }} />
-                                );
-                            })*/
                         }
                         renderInput={(params) => (
                             <TextField

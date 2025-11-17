@@ -30,12 +30,12 @@ const SongManagement: React.FC<SongManagementProps> = ({ song, onSaveSong }) => 
             ". . . action"
         `;
 
-    function handleOnSaveSong(data: Omit<Song, "id" | "notes">) {
+    async function handleOnSaveSong(data: Omit<Song, "id" | "notes">) {
         if (!song) {
             return;
         }
 
-        onSaveSong(song.id, data);
+        await onSaveSong(song.id, data);
     }
 
     return (<>
