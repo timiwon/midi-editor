@@ -28,6 +28,7 @@ const ActionToolbar: React.FC<ActionToolbarProps> = ({
 
     return (
         <Box
+            className='select-none'
             sx={{
                 display: 'grid',
                 gridTemplateColumns: 'repeat(4, 1fr)',
@@ -56,10 +57,10 @@ const ActionToolbar: React.FC<ActionToolbarProps> = ({
             </Box>
             <Box sx={{ gridArea: 'content' }}>
                 <List sx={{ listStyleType: 'disc', ml: 5 }}>
-                    <ListItem sx={{ display: 'list-item' }}>
+                    <ListItem sx={{ py: 0, display: 'list-item' }}>
                         Click directly on node for editing
                     </ListItem>
-                    <ListItem sx={{ display: 'list-item' }}>
+                    <ListItem sx={{ py: 0, display: 'list-item' }}>
                         Click on blank time for adding new note at that point
                     </ListItem>
                 </List>

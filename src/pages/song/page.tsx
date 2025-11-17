@@ -115,28 +115,22 @@ function SongPage() {
                     {!song && <NoteContainerSkeleton />}
                     {song && <NoteContainer song={song} />}
                 </MainBlock>
-
-                {/** Modal for create/update note */}
-                {song && <NoteModal
-                    open={isOpenNoteModal}
-                    data={selectedNote}
-                    maxTime={song.totalDuration}
-                    title={selectedNote ? 'Edit Note' : 'Add Note'}
-                    onClose={() => {
-                        setIsOpenNoteModal(false);
-                        setSelectedNote(null);
-                    }}
-                    onSave={handleSaveNote}
-                />}
-
-                <ErrorDialog
-                    open={isOpenErrorDialog}
-                    title="Failed"
-                    content={error as string}
-                    onClose={() => setIsOpenErrorDialog(false)}
-                />
             </Box>
 
+            {/** Modal for create/update note */}
+            {song && <NoteModal
+                open={isOpenNoteModal}
+                data={selectedNote}
+                maxTime={song.totalDuration}
+                title={selectedNote ? 'Edit Note' : 'Add Note'}
+                onClose={() => {
+                    setIsOpenNoteModal(false);
+                    setSelectedNote(null);
+                }}
+                onSave={handleSaveNote}
+            />}
+
+            {/** Modal for edit song */}
             {song && <SongModal
                 open={isOpenSongModal}
                 data={song}
@@ -147,6 +141,7 @@ function SongPage() {
                 onSave={handleOnSaveSong}
             />}
 
+            {/** Modal for I/O song */}
             {song && <IOModal
                 open={isOpenIOModal}
                 data={song}
@@ -155,6 +150,13 @@ function SongPage() {
                 }}
                 onSave={handleImportSong}
             />}
+
+            <ErrorDialog
+                open={isOpenErrorDialog}
+                title="Failed"
+                content={error as string}
+                onClose={() => setIsOpenErrorDialog(false)}
+            />
         </SongContext.Provider>
     );
 }

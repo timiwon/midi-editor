@@ -29,7 +29,9 @@ const SongManagement: React.FC<SongManagementProps> = ({ song, onOpenIOBtnClick,
         `;
 
     return (<>
-        <Box sx={{ mb: 3 }}>
+        <Box
+            className='select-none'
+            sx={{ mb: 3 }}>
 
             <Box
                 sx={{
