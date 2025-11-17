@@ -63,7 +63,7 @@ const SongCard: React.FC<SongCardProps> = ({
                         direction="row"
                         sx={{ justifyContent: 'space-between', alignItems: 'center' }}
                     >
-                        <Typography gutterBottom variant="h5" component="div" sx={{ mb: 0 }}>
+                        <Typography className="truncate" gutterBottom variant="h5" component="div" sx={{ mb: 0 }}>
                             {data.name}
                         </Typography>
                         <Chip

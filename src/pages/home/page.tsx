@@ -29,10 +29,6 @@ function Home() {
     const [isOpenConfirmDeleteDialog, setIsOpenConfirmDeleteDialog] = useState(false);
     const [isOpenErrorDialog, setIsOpenErrorDialog] = useState(false);
 
-    useEffect(() => {
-        setIsOpenErrorDialog(Boolean(error))
-    }, [error])
-
     function closeErrorDialog() {
         setIsOpenErrorDialog(false);
     }
@@ -78,6 +74,10 @@ function Home() {
         setSelectedSong(null);
         setIsOpenConfirmDeleteDialog(false);
     }
+
+    useEffect(() => {
+        setIsOpenErrorDialog(Boolean(error))
+    }, [error]);
 
     return (
         <Box>

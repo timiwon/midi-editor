@@ -1,6 +1,6 @@
 import type React from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
-import { Button, FormControl, FormHelperText, FormLabel, Typography } from '@mui/material';
+import { Button, FormControl, FormHelperText, Typography } from '@mui/material';
 import EmojiPickerReact from 'emoji-picker-react';
 import EmojiIcon from './EmojiIcon';
 

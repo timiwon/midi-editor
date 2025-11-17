@@ -5,8 +5,10 @@ import { TextField } from '@mui/material';
 interface InputProps {
     name: string;
     label: string;
+    minRows?: number;
+    maxRows?: number;
 }
-export const Input: React.FC<InputProps> = ({ name, label }) => {
+export const Input: React.FC<InputProps> = ({ name, label, minRows = 1, maxRows = 1 }) => {
     const { control } = useFormContext();
 
     return (
@@ -15,6 +17,9 @@ export const Input: React.FC<InputProps> = ({ name, label }) => {
             control={control}
             render={({ field: { value, disabled, name, ref, onChange, onBlur }, fieldState: { error } }) => (
                 <TextField
+                    multiline={minRows>1}
+                    minRows={minRows}
+                    maxRows={maxRows}
                     value={value}
                     disabled={disabled}
                     name={name}

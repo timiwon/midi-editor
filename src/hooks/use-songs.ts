@@ -11,10 +11,6 @@ export function useSongs() {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
 
-    useEffect(() => {
-        debounceLoadSongs('');
-    }, []);
-
     const debounceLoadSongs = debounce(loadSongs, 500);
     async function loadSongs(searchValue: string) {
         setLoading(true);
@@ -76,6 +72,10 @@ export function useSongs() {
             setLoading(false);
         }
     }
+
+    useEffect(() => {
+        debounceLoadSongs('');
+    }, []);
 
     return {
         songs,

@@ -1,7 +1,7 @@
 import type React from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
 import { SketchPicker } from 'react-color';
-import { FormControl, FormHelperText, FormLabel, Typography } from '@mui/material';
+import { FormControl, FormHelperText, Typography } from '@mui/material';
 
 interface ColorPickerProps {
     name: string;

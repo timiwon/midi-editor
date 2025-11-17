@@ -22,10 +22,6 @@ export const useSong = (songId: string | undefined): UseSongValues => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
 
-    useEffect(() => {
-        debounceLoadSong();
-    }, [songId]);
-
     const debounceLoadSong = debounce(loadSong, 500);
     async function loadSong() {
         if (!songId) {
@@ -97,6 +93,10 @@ export const useSong = (songId: string | undefined): UseSongValues => {
             setLoading(false);
         }
     }
+
+    useEffect(() => {
+        debounceLoadSong();
+    }, [songId]);
 
     return {
         song,

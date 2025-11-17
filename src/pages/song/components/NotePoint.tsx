@@ -51,7 +51,7 @@ const NotePoint: React.FC<NotePointProps> = ({ position, list, chunk, onEditNote
                         {' - '}
                         <Typography variant="body2" component='span'>{list[position].time}s</Typography>
                     </Typography>
-                    <Typography variant="body1">{list[position].description}</Typography>
+                    <Typography variant="body1" whiteSpace={'pre-wrap'}>{list[position].description}</Typography>
                 </Box>}
             >
                 <Box>

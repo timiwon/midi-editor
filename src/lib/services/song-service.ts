@@ -49,7 +49,7 @@ export class SongService implements SongServiceInterface {
             throw new Error(ErrorMessages[ErrorMessageTypes.note_max_duration]);
         }
 
-        if (oldData ) {
+        if (oldData) {
             if (noteIndex === -1) {
                 throw new Error(ErrorMessages[ErrorMessageTypes.not_found]);
             }
@@ -66,13 +66,13 @@ export class SongService implements SongServiceInterface {
         }
 
         let data = {
-                ...song,
-                notes: [
-                    ...(song.notes ? song.notes : []),
-                    newData
-                ]
-            };
-            
+            ...song,
+            notes: [
+                ...(song.notes ? song.notes : []),
+                newData
+            ]
+        };
+
         if (oldData) {
             data = {
                 ...song,
@@ -98,14 +98,13 @@ export class SongService implements SongServiceInterface {
             throw new Error(ErrorMessages[ErrorMessageTypes.not_found]);
         }
 
-        let data = {
+        const result = await this.update(songId, {
             ...song,
             notes: [
                 ...song.notes.filter((note, index) => noteIndex !== index),
             ]
-        };
-        const result = await this.update(songId, data);
-        
+        });
+
         return result;
     }
 }

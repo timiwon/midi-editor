@@ -3,7 +3,7 @@ import { Box } from "@mui/material";
 
 import type { Note } from "@/types/entities";
 
-import { SongContext } from "..";
+import SongContext from "../SongContext";
 import NoteModal from "./NoteModal";
 import NotePoint from "./NotePoint";
 
@@ -20,7 +20,6 @@ interface NoteCellProps {
 const NoteCell: React.FC<NoteCellProps> = ({ trackIndex, rangeTime, notes, mainCell }) => {
     const { song, saveNote, deleteNote } = useContext(SongContext);
             
-    const [list, setList] = useState<{[key: number]: Note}>({})
     const [selectedNote, setSelectedNote] = useState<Note | null>(null);
     const [isOpenNoteModal, setIsOpenNoteModal] = useState(false);
 
@@ -30,15 +29,11 @@ const NoteCell: React.FC<NoteCellProps> = ({ trackIndex, rangeTime, notes, mainC
         height: mainCell.height/10
     };
 
-    useEffect(() => {
-        let parsedData: {[key: number]: Note} = {};
-        notes.forEach(note => {
-            const index = getNoteChunkIndex(note);
-            parsedData[index] = note;
-        });
-
-        setList(parsedData)
-    }, [notes]);
+    const list: { [key: number]: Note } = {};
+    notes.forEach(note => {
+        const index = getNoteChunkIndex(note);
+        list[index] = note;
+    });
 
     function getNoteChunkIndex(note: Note) {
         return ((note.time - rangeTime[0]) / 0.5) + 1;
@@ -67,8 +62,16 @@ const NoteCell: React.FC<NoteCellProps> = ({ trackIndex, rangeTime, notes, mainC
             setIsOpenNoteModal(false);
         } catch (error) {
             // do nothing
+            console.log(error)
         }
     }
+
+    useEffect(() => {
+        if (!notes) {
+            return
+        }
+
+    }, [notes]);
 
     return (<>
         <Box

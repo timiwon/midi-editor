@@ -73,9 +73,9 @@ const NoteForm: React.FC<NoteFormProps> = ({
             <NumberInput name="track" label="Track" />
             <NumberInput name="time" label="Time" />
             <Input name="title" label="Title" />
-            <Input name="description" label="Description" />
-            *<ColorPicker name='color' label='Color'/>
-            *<EmojiPicker name="icon" label="Icon" />
+            <Input name="description" minRows={4} maxRows={6} label="Description" />
+            <ColorPicker name='color' label='Color'/>
+            <EmojiPicker name="icon" label="Icon" />
             <Box sx={{
                 display: 'flex',
                 justifyContent: 'flex-end'

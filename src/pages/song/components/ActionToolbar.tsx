@@ -34,6 +34,7 @@ const ActionToolbar: React.FC<ActionToolbarProps> = ({
                 gap: 1,
                 gridTemplateRows: 'auto',
                 gridTemplateAreas,
+                mb: 2
             }}
         >
             <Box sx={{ gridArea: 'main' }}>
@@ -56,7 +57,7 @@ const ActionToolbar: React.FC<ActionToolbarProps> = ({
             <Box sx={{ gridArea: 'content' }}>
                 <List sx={{ listStyleType: 'disc', ml: 5 }}>
                     <ListItem sx={{ display: 'list-item' }}>
-                        Add notes via form (track, time, title, description, color)
+                        Click directly on node for editing
                     </ListItem>
                     <ListItem sx={{ display: 'list-item' }}>
                         Edit and delete existing notes

@@ -2,8 +2,8 @@ import { Suspense } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { PATH } from "@/lib/paths";
 import Loading from "@/shared-components/Loading";
-import Home from "@/pages/home/index";
-import SongPage from "@/pages/song";
+import Home from "@/pages/home/page";
+import SongPage from "@/pages/song/page";
 
 const Router = () => {
     return (
