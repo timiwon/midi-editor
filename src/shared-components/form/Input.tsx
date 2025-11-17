@@ -28,7 +28,7 @@ export const Input: React.FC<InputProps> = ({ name, label, minRows = 1, maxRows 
                     onChange={onChange}
                     label={label}
                     error={!!error}
-                    helperText={error ? error.message : `${value.length} characters`}
+                    helperText={error ? error.message : `${value ? value.length : 0} characters`}
                     fullWidth
                     margin="normal"
                 />

@@ -42,9 +42,8 @@ const NoteForm: React.FC<NoteFormProps> = ({
             .max(50, 'Max length is 50 characters!')
             .required('Required'),
         description: Yup.string()
-            .min(2, 'Required at least 2 characters!')
             .max(500, 'Max length is 500 characters!')
-            .required('Required'),
+            .optional(),
         color: Yup.string()
             .max(50, 'Max length is 50 characters!')
             .required('Required'),
@@ -58,7 +57,7 @@ const NoteForm: React.FC<NoteFormProps> = ({
             track: data ? data.track : 1,
             time: data ? data.time : 0,
             title: data ? data.title : '',
-            description: data ? data.description : '',
+            description: data ? data.description : undefined,
             color: data ? data.color : '',
             icon: data ? data.icon : '',
         },

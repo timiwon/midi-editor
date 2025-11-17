@@ -2,7 +2,7 @@ import React from 'react';
 import type { ReactNode } from 'react';
 import { AppBar, Toolbar, Typography, Container, Box } from '@mui/material';
 import { ThemeProvider } from '@mui/material/styles';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 import { mainTheme } from '@/lib/themes';
 import { PATH } from '@/lib/paths';

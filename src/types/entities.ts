@@ -1,20 +1,20 @@
 export type Song = {
     id: string;
     name: string;
-    description: string;
+    description?: string;
     totalDuration: number;
-    tags: string[];
+    tags?: string[];
     trackLabels: string[];
     notes: Note[];
-    createdAt: string;
-    updatedAt: string;
+    createdAt: number;
+    updatedAt: number;
 }
 
 export type Note = {
     track: number;
     time: number;
     title: string;
-    description: string;
+    description?: string;
     color: string;
     icon?: string;
 }

@@ -1,6 +1,9 @@
+import * as Yup from 'yup';
+
 import type { SongServiceInterface } from "@/types/services";
-import { SongRepository } from "../repositories";
 import type { Note, Song } from "@/types/entities";
+
+import { SongRepository } from "../repositories";
 import { ErrorMessages, ErrorMessageTypes } from "../constant";
 
 export class SongService implements SongServiceInterface {
@@ -24,6 +27,46 @@ export class SongService implements SongServiceInterface {
     async update(songId: string, data: Partial<Song>): Promise<Song> {
         const song = await this.repo.updateById(songId, data);
         return song;
+    }
+
+    async importSong(songId: string, data: string): Promise<Song> {
+        const song = await this.repo.findById(songId);
+
+        const validationSchema = Yup.object().shape({
+            name: Yup.string()
+                .min(2, 'Name must have at least 2 characters!')
+                .max(50, 'Name exceeds limit 50 characters!')
+                .required('Name of Song is required!'),
+            description: Yup.string()
+                .max(500, 'Description exceeds limit 500 characters!')
+                .optional(),
+            totalDuration: Yup.number()
+                .min(10, 'Duration required at least 10 seconds!')
+                .max(300, 'Duration exceeds limit 300s!')
+                .typeError('Duration must be a number!')
+                .required('Duration is required!'),
+            tags: Yup.array()
+                .of(Yup.string()
+                    .max(20, 'Tag exceeds limit 20 characters!')
+                    .required('Tag Required'),
+                )
+                .optional(),
+            trackLabels: Yup.array()
+                .min(1, 'Track Labels must contain at least one item!')
+                .max(8, 'Maximum is 8 items!')
+                .of(Yup.string()
+                    .max(10, 'Max length is 10 characters!')
+                    .required('TrackLabel is required!'),
+                )
+                .required('TrackLabel is required!'),
+        }).required();
+        const parsedData = JSON.parse(data);
+
+        // Throw on the first error or collect and return all
+        const validatedData = await validationSchema.validate(parsedData, { abortEarly: false });
+
+        const result = await this.repo.rawUpdate(songId, validatedData);
+        return result;
     }
 
     async delete(songId: string) {

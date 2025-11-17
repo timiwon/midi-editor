@@ -24,6 +24,10 @@ export type SongServiceInterface = Omit<BaseServiceInterface<Song>, "getList" | 
     create(
         data: Omit<Song, "id" | "notes">,
     ): Promise<Song>;
+    importSong(
+        songId: string,
+        data: string,
+    ): Promise<Song>;
     saveNote(
         songId: string,
         oldData: Note,

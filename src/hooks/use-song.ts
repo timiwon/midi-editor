@@ -14,6 +14,7 @@ export interface UseSongValues {
     saveNote: (songId: string, oldData: Note | null, newData: Note) => Promise<void>;
     deleteNote: (songId: string, noteData: Note) => Promise<void>;
     deleteSong: (id: string) => Promise<void>;
+    importSong: (id: string, data: string) => Promise<void>;
 }
 
 export const useSong = (songId: string | undefined): UseSongValues => {
@@ -66,6 +67,19 @@ export const useSong = (songId: string | undefined): UseSongValues => {
         }
     }
 
+    async function importSong(id: string, data: string) {
+        setLoading(true);
+        setError(null);
+        try {
+            const updatedSong = await service.importSong(id, data);
+            setSong(updatedSong);
+        } catch (err) {
+            setError(getErrorMessage(err, "Failed to import song."));
+        } finally {
+            setLoading(false);
+        }
+    }
+
     async function saveNote(songId: string, oldData: Note | null, newData: Note) {
         setLoading(true);
         setError(null);
@@ -106,6 +120,7 @@ export const useSong = (songId: string | undefined): UseSongValues => {
         saveSong,
         saveNote,
         deleteNote,
-        deleteSong
+        deleteSong,
+        importSong
     }
 }

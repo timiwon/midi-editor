@@ -1,10 +1,11 @@
-import React from "react"
+import React, { useContext } from "react"
 import { Box } from "@mui/material"
 
 import type { Song } from '@/types/entities';
 
 import BaseModal from "@/shared-components/modals/BaseModal";
 import SongForm from "./SongForm";
+import SongsContext from "../home/SongsContext";
 
 interface SongModalProps {
     open: boolean;
@@ -20,16 +21,16 @@ const SongModal: React.FC<SongModalProps> = ({
     onClose,
     onSave
 }) => {
+    const { loading } = useContext(SongsContext);
 
     function handleSubmit (values: Omit<Song, "id" | "notes">) {
         onSave(values);
-        onClose();
     }
 
     return (
         <BaseModal
             open={open}
-            onClose={onClose}
+            onClose={loading ? () => {} : onClose}
             title={title}
             description={''}
         >

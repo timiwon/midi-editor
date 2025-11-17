@@ -7,18 +7,16 @@ import type { Song } from "@/types/entities";
 import { useUtils } from "@/hooks";
 
 import Button from '@/shared-components/Button';
-import SongModal from '@/pages/share-feature-components/SongModal';
-import { useState } from "react";
 
 interface SongManagementProps {
     song: Song;
-    onSaveSong: (id: string, data: Omit<Song, "id" | "notes">) => Promise<void>;
+    onOpenIOBtnClick: (e: React.MouseEvent<HTMLButtonElement>) => void;
+    onEditSongBtnClick: (e: React.MouseEvent<HTMLButtonElement>) => void;
 }
 
-const SongManagement: React.FC<SongManagementProps> = ({ song, onSaveSong }) => {
+const SongManagement: React.FC<SongManagementProps> = ({ song, onOpenIOBtnClick, onEditSongBtnClick }) => {
     const { isMobile } = useUtils();
 
-    const [isOpenSongModal, setIsOpenSongModal] = useState(false);
     const gridTemplateAreas = !isMobile ?
         `
             "main main main action"
@@ -29,14 +27,6 @@ const SongManagement: React.FC<SongManagementProps> = ({ song, onSaveSong }) => 
             "contain contain contain contain"
             ". . . action"
         `;
-
-    async function handleOnSaveSong(data: Omit<Song, "id" | "notes">) {
-        if (!song) {
-            return;
-        }
-
-        await onSaveSong(song.id, data);
-    }
 
     return (<>
         <Box sx={{ mb: 3 }}>
@@ -60,13 +50,13 @@ const SongManagement: React.FC<SongManagementProps> = ({ song, onSaveSong }) => 
                         sx={{ mr: 1 }}
                         variant='outlined'
                         color="info"
-                        onClick={() => setIsOpenSongModal(true)}
+                        onClick={onOpenIOBtnClick}
                     >
                         {isMobile ? 'I/O' : 'Import/Export'}
                     </Button>
                     <Button
                         icon={<EditIcon />}
-                        onClick={() => setIsOpenSongModal(true)}
+                        onClick={onEditSongBtnClick}
                     >
                         {isMobile ? 'Edit' : 'Edit Song'}
                     </Button>
@@ -103,15 +93,6 @@ const SongManagement: React.FC<SongManagementProps> = ({ song, onSaveSong }) => 
             </Typography>
         </Box>
 
-        {song && <SongModal
-            open={isOpenSongModal}
-            data={song}
-            title={'Edit Song'}
-            onClose={() => {
-                setIsOpenSongModal(false);
-            }}
-            onSave={handleOnSaveSong}
-        />}
     </>)
 };
 

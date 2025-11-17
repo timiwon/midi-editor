@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import * as Yup from 'yup';
 import { useForm, FormProvider } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -9,6 +9,7 @@ import type { Song } from '@/types/entities';
 import { Input, NumberInput, AutocompleteChip } from '@/shared-components/form';
 import { Button } from "@/shared-components/styled-components";
 import SongTrackLabelsField from './SongTrackLabelsField';
+import SongsContext from '../home/SongsContext';
 
 const validationSchema = Yup.object().shape({
     name: Yup.string()
@@ -16,18 +17,19 @@ const validationSchema = Yup.object().shape({
         .max(50, 'Max length is 50 characters!')
         .required('Required'),
     description: Yup.string()
-        .min(2, 'Required at least 2 characters!')
         .max(500, 'Max length is 500 characters!')
-        .required('Required'),
+        .optional(),
     totalDuration: Yup.number()
         .min(10, 'Required at least 10 seconds!')
         .max(300, 'Maximum is 300s!')
         .typeError('Duration must be a number!')
         .required('Required'),
     tags: Yup.array()
-        .min(1, 'Tags must contain at least one item!')
-        .max(8, 'Maximum is 8 items!')
-        .required('Required'),
+        .of(Yup.string()
+            .max(20, 'Max length is 20 characters!')
+            .required('Required'),
+        )
+        .optional(),
     trackLabels: Yup.array()
         .min(1, 'Track Labels must contain at least one item!')
         .max(8, 'Maximum is 8 items!')
@@ -35,13 +37,13 @@ const validationSchema = Yup.object().shape({
             .max(10, 'Max length is 10 characters!')
         )
         .required('Required'),
-});
+}).required();
 
 export type FormValues = {
     name: string;
-    description: string;
+    description?: string;
     totalDuration: number;
-    tags: string[];
+    tags?: string[];
     trackLabels: (string | undefined)[];
 };
 interface SongFormProps {
@@ -52,12 +54,13 @@ const SongForm: React.FC<SongFormProps> = ({
     data,
     onSubmit
 }) => {
-    const methods = useForm<FormValues>({
+    const { loading } = useContext(SongsContext);
+    const methods = useForm({
         defaultValues: {
             name: data ? data.name : '',
             description: data ? data.description : '',
             totalDuration: data ? data.totalDuration : 0,
-            tags: data ? data.tags : [],
+            tags: data ? data.tags : undefined,
             trackLabels: data ? data.trackLabels : []
         },
         mode: 'onChange',
@@ -104,12 +107,13 @@ const SongForm: React.FC<SongFormProps> = ({
                 justifyContent: 'flex-end'
             }}>
                 <Button
+                    disabled={loading}
                     type="submit"
                     variant="contained"
                     color="primary"
                     onClick={methods.handleSubmit(handleSubmit)}
                 >
-                    Save
+                    {loading ? 'Saving...' : 'Save'}
                 </Button>
             </Box>
         </FormProvider>

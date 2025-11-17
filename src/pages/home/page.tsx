@@ -12,6 +12,7 @@ import ActionToolbar from "./components/ActionToolbar";
 import SongCard from "./components/SongCard";
 import EmptyStorage from "@/shared-components/EmptyStorage";
 import SongCardSkeleton from "./components/SongCardSkeleton";
+import SongsContext from "./SongsContext";
 
 function Home() {
     const {
@@ -47,13 +48,20 @@ function Home() {
         setIsOpenSongModal(true);
     }
 
-    function handleOnSaveSong(data: Omit<Song, "id" | "notes">) {
-        if (selectedSong) {
-            return saveSong(selectedSong.id, data);
-        }
+    async function handleOnSaveSong(data: Omit<Song, "id" | "notes">) {
+        try {
+            if (selectedSong) {
+                await saveSong(selectedSong.id, data);
+                setIsOpenSongModal(false);
+                setSelectedSong(null);
+                return;
+            }
 
-        createSong(data)
-        return;
+            await createSong(data);
+            setIsOpenSongModal(false);
+            setSelectedSong(null);
+        } catch {
+        }
     }
 
     function handleDeleteBtnClick(data: Song) {
@@ -80,73 +88,74 @@ function Home() {
     }, [error]);
 
     return (
-        <Box>
-            {/** Page Description */}
-            <MainBlock sx={{ mt: 0, mb: 10 }}>
-                <Typography variant="h5" gutterBottom>
-                    Welcome to MIDI
-                </Typography>
-                <Typography variant="body1" align="justify">
-                    MIDI Editor - a web application similar to a piano roll MIDI editor where users can create, visualize, and manage musical notes placed at specific time points across multiple tracks (similar to FL Studio, Ableton Live, or GarageBand's piano roll view).
-                </Typography>
-            </MainBlock>
+        <SongsContext.Provider value={{ loading }}>
+            <Box>
+                {/** Page Description */}
+                <MainBlock sx={{ mt: 0, mb: 10 }}>
+                    <Typography variant="h5" gutterBottom>
+                        Welcome to MIDI
+                    </Typography>
+                    <Typography variant="body1" align="justify">
+                        MIDI Editor - a web application similar to a piano roll MIDI editor where users can create, visualize, and manage musical notes placed at specific time points across multiple tracks (similar to FL Studio, Ableton Live, or GarageBand's piano roll view).
+                    </Typography>
+                </MainBlock>
 
-            {/** Songs Management */}
-            <MainBlock>
-                {/** Action toolbar */}
-                <ActionToolbar
-                    onCreateBtnClick={hanleCreateBtnClick}
-                    onSearch={handleSearch}
+                {/** Songs Management */}
+                <MainBlock>
+                    {/** Action toolbar */}
+                    <ActionToolbar
+                        onCreateBtnClick={hanleCreateBtnClick}
+                        onSearch={handleSearch}
+                    />
+
+                    {/** List Songs */}
+                    <Box sx={{ mt: 5 }}>
+                        {loading && songs.length > 0 && songs.map((song) =>
+                            <SongCardSkeleton key={song.id} />
+                        )}
+                        {loading && songs.length <= 0 && [1, 2].map((index) =>
+                            <SongCardSkeleton key={index} />
+                        )}
+                        {!loading && (<>
+                            {(!songs || songs.length <= 0) && <EmptyStorage />}
+                            {songs && songs.length > 0 && songs.map((song, index) =>
+                                <SongCard
+                                    key={index}
+                                    data={song}
+                                    onEditClick={() => handleEditBtnClick(song)}
+                                    onDeleteClick={() => handleDeleteBtnClick(song)}
+                                />
+                            )}
+                        </>)}
+                    </Box>
+                </MainBlock>
+
+                <SongModal
+                    open={isOpenSongModal}
+                    data={selectedSong}
+                    title={selectedSong ? 'Edit Song' : 'Create Song'}
+                    onClose={() => {
+                        setIsOpenSongModal(false);
+                        setSelectedSong(null);
+                    }}
+                    onSave={handleOnSaveSong}
                 />
 
-                {/** List Songs */}
-                <Box sx={{ mt: 5 }}>
-                    {loading && songs.length > 0 && songs.map((song) =>
-                        <SongCardSkeleton key={song.id} />
-                    )}
-                    {loading && songs.length <= 0 && [1, 2].map((index) =>
-                        <SongCardSkeleton key={index} />
-                    )}
-                    {!loading && (<>
-                        {(!songs || songs.length <= 0) && <EmptyStorage />}
-                        {songs && songs.length > 0 && songs.map((song, index) =>
-                            <SongCard
-                                key={index}
-                                data={song}
-                                onEditClick={() => handleEditBtnClick(song)}
-                                onDeleteClick={() => handleDeleteBtnClick(song)}
-                            />
-                        )}
-                    </>)}
-                </Box>
-            </MainBlock>
-
-
-            <SongModal
-                open={isOpenSongModal}
-                data={selectedSong}
-                title={selectedSong ? 'Edit Song' : 'Create Song'}
-                onClose={() => {
-                    setIsOpenSongModal(false);
-                    setSelectedSong(null);
-                }}
-                onSave={handleOnSaveSong}
-            />
-
-            <ConfirmDialog
-                open={isOpenConfirmDeleteDialog}
-                title={`Delete - ${selectedSong?.name}`}
-                description="Delete Action will remove this song out of storage and can not recover it."
-                onCancel={handleCancelDeleteSong}
-                onOk={handleDeleteSong}
-            />
-            <ErrorDialog
-                open={isOpenErrorDialog}
-                title="Failed"
-                content={error as string}
-                onClose={closeErrorDialog}
-            />
-        </Box>
+                <ConfirmDialog
+                    open={isOpenConfirmDeleteDialog}
+                    title={`Delete - ${selectedSong?.name}`}
+                    description="Delete Action will remove this song out of storage and can not recover it."
+                    onCancel={handleCancelDeleteSong}
+                    onOk={handleDeleteSong}
+                />
+                <ErrorDialog
+                    open={isOpenErrorDialog}
+                    title="Failed"
+                    content={error as string}
+                    onClose={closeErrorDialog}
+                />
+            </Box>
+        </SongsContext.Provider>
     )
 };
 

@@ -43,7 +43,9 @@ export abstract class BaseRepository<T> implements BaseRepositoryInterface<T> {
                 item
             ]));
 
-            return resolve(item);
+            setTimeout(() => {
+                return resolve(item);
+            }, this.delayTimeDemo);
         });
     }
 

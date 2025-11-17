@@ -9,4 +9,5 @@ export type BaseRepositoryInterface<T> = {
 
 export type SongRepositoryInterface = BaseRepositoryInterface<Song> & {
     getList(searchValue: string): Promise<Song[]>;
+    rawUpdate(id: string, params: Partial<Song>): Promise<Song>;
 };
