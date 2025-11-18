@@ -1,6 +1,6 @@
 import React from 'react';
 import type { ReactNode } from 'react';
-import { AppBar, Toolbar, Typography, Container, Box } from '@mui/material';
+import { AppBar, Toolbar, Typography, Container, Box, CssBaseline } from '@mui/material';
 import { ThemeProvider } from '@mui/material/styles';
 import { useNavigate } from 'react-router-dom';
 
@@ -17,8 +17,9 @@ const MainLayout: React.FC<LayoutProps> = ({ children, title = 'MIDI - EDITOR' }
         
     return (
         <ThemeProvider theme={mainTheme}>
+            <CssBaseline />
             <Box sx={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
-                <AppBar position="fixed">
+                <AppBar position="fixed" color='primary'>
                     <Toolbar>
                         <Typography className='select-none cursor-pointer' variant="h6" onClick={() => navigate(PATH.HOME)}>
                             {title}

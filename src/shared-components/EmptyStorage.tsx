@@ -12,15 +12,15 @@ function EmptyStorage() {
 
     return (
         <Card
+            className="mb-5 w-full md:w-1/2"
             variant="outlined"
             sx={{
-                maxWidth: 400,
                 textAlign: 'center',
                 padding: 4,
                 bgcolor: theme.palette.background.default
             }}
         >
-            <CardContent>
+            <Box className="select-none" sx={{ pt: 2, pr: 2, pl: 2 }}>
                 <Box sx={{ color: 'text.secondary', mb: 2 }}>
                     <Inventory2Icon sx={{ fontSize: 60 }} />
                 </Box>
@@ -30,7 +30,7 @@ function EmptyStorage() {
                 <Typography variant="body2" color="text.secondary">
                     Get started by uploading your first file to your cloud storage.
                 </Typography>
-            </CardContent>
+            </Box>
         </Card>
     );
 }

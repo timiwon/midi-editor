@@ -14,8 +14,8 @@ export const Card = styled(MuiCard)(({ theme }) => ({
 }));
 
 export const Button = styled(MuiButton)(({ theme }) => ({
-    borderColor: theme.palette.secondary.light,
+    borderColor: theme.palette.secondary.dark,
     '&:hover': {
-        borderColor: theme.palette.primary.dark
+        borderColor: theme.palette.primary.light
     }
 }));

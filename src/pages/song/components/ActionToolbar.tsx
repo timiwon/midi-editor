@@ -52,7 +52,7 @@ const ActionToolbar: React.FC<ActionToolbarProps> = ({
                     icon={<AddIcon/>}
                     onClick={onAddNoteBtnClick}
                 >
-                    {isMobile ? 'Create' : 'Create Note'}
+                    {isMobile ? 'Add' : 'Add Note'}
                 </Button>
             </Box>
             <Box sx={{ gridArea: 'content' }}>

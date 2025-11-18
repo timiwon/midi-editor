@@ -8,7 +8,7 @@ import Button from '@/shared-components/Button'
 
 const SongTrackLabelsField = () => {
     const { control, register, trigger, formState: { errors } } = useFormContext<FormValues>();
-    const { fields, append, remove } = useFieldArray({
+    const { fields, prepend, remove } = useFieldArray({
         control,
         name: 'trackLabels' as never,
     });
@@ -40,7 +40,7 @@ const SongTrackLabelsField = () => {
                         return;
                     }
 
-                    append("");
+                    prepend("");
                 }}
             >
                 add Track

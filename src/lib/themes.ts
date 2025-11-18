@@ -1,21 +1,37 @@
 import { createTheme } from '@mui/material/styles';
-import { blue } from '@mui/material/colors';
+import { green, grey } from '@mui/material/colors';
 
+const toneColor = green;
 export const mainTheme = createTheme({
     palette: {
-        primary: blue,
-        secondary: blue,
+        primary: {
+            light: toneColor[500],
+            main: toneColor[900],
+            dark: toneColor[900],
+        },
+        secondary: {
+            light: toneColor[100],
+            main: toneColor[400],
+            dark: toneColor[400],
+        },
         background: {
-            paper: blue[50],
+            paper: toneColor[50],
         },
     },
     typography: {
         body2: {
-            color: blue[500],
+            color: toneColor[900],
             fontSize: '0.8rem',
         },
     },
     components: {
+        MuiCssBaseline: {
+          styleOverrides: {
+            body: {
+              backgroundColor: grey[100],
+            },
+          },
+        },
         MuiSkeleton: {
             defaultProps: {
                 animation: 'wave',
@@ -29,17 +45,17 @@ export const mainTheme = createTheme({
         MuiTableCell: {
             styleOverrides: {
                 root: {
-                    backgroundColor: blue[200],
+                    backgroundColor: toneColor[200],
                     '&.MuiTableCell-head.major-cell': {
-                        backgroundColor: blue[500],
+                        backgroundColor: toneColor[500],
                         color: '#fff'
                     },
                     '&.MuiTableCell-body': {
-                        backgroundColor: blue[50],
+                        backgroundColor: toneColor[50],
                         borderBottom: 'none',
                     },
                     '&.MuiTableCell-body.major-cell': {
-                        backgroundColor: blue[200],
+                        backgroundColor: toneColor[200],
                     },
                 }
             }
