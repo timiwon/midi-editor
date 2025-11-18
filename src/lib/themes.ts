@@ -27,11 +27,11 @@ export const mainTheme = createTheme({
     },
     components: {
         MuiCssBaseline: {
-          styleOverrides: {
-            body: {
-              backgroundColor: '#FFF',
+            styleOverrides: {
+                body: {
+                    backgroundColor: '#FFF',
+                },
             },
-          },
         },
         MuiSkeleton: {
             defaultProps: {

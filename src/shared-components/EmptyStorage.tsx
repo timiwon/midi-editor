@@ -1,6 +1,5 @@
 import {
     Card,
-    CardContent,
     Typography,
     Box,
     useTheme,

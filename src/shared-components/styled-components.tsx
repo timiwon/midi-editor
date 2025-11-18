@@ -1,7 +1,6 @@
 import { styled } from '@mui/material/styles';
 import {
     Card as MuiCard,
-    Button as MuiButton
 } from '@mui/material';
 
 export const Card = styled(MuiCard)(({ theme }) => ({

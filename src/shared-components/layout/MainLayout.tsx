@@ -65,7 +65,7 @@ const MainLayout: React.FC<LayoutProps> = ({ children, title = 'MIDI - EDITOR' }
                                 </Box>
                                 <Box className='mt-2 lg:mt-11' sx={{ gridArea: 'title', display: 'flex', alignItems: 'center' }}>
                                     <Typography variant="h5" sx={{mb:0}} color='background.paper'>
-                                        Welcome to MIDI
+                                        Welcome to {title}
                                     </Typography>
                                 </Box>
                                 <Box sx={{ gridArea: 'content' }}>

@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { Backdrop, Box, CircularProgress } from '@mui/material';
+import { Box } from '@mui/material';
 
 import type { Song } from "@/types/entities";
 import type { Note } from '@/types/entities';
