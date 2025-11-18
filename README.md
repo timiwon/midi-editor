@@ -1,13 +1,62 @@
-# React + TypeScript + Vite
+# MIDI - Editor Case Study
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This project using basic template with React + TypeScript + Vite, provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+
+## Note
+
+I use fake delay time for enjoy loading and skeleton on page action. We can edit delay time in ```./src/lib/config.ts```
+```js
+// ./src/lib/config.ts
+export const DELAY_TIME_LOADING = 1000;
+```
+
+## Completed Features
+
+- Store data in localstorage
+- Song/Sequence Management
+    - create | update | delete actions in home page
+    - list all songs in home page
+    - update action in song detail page
+- MDID Note Management
+    - add note via createButton
+    - add note by clicking on blank time cell
+    - update & delete note by clicking on note in grid
+    - Import/Export Song feature via button in song detail page
+
+## Project folder structure
+
+```js
+src
+├── hooks
+│
+├── lib 
+│   ├── repositories // Working with external data like localstorage or IndexedDB
+│   │   ├── index.ts // Ideally we can use export to easy switching between localstorage and IndexedDB.
+│   │   ├── base-repository-with-localstorage.ts
+│   │   └── ...
+│   ├── services // Working with business logic
+│   ├── validation-schemas // Contain validation schemas to validate input params of service
+│   ├── config.ts // ex: edit faking delay time here
+│   ├── constant.ts
+│   ├── paths.ts // Define const PATH for router
+│   ├── themes.ts // Themes are defined here
+│   └── utils.ts
+├── pages
+│   ├── ...
+│   └── share-feature-components // Contain feature components which are using on pages
+├── shared-components // Contain presentation components
+├── types // Type of entities are declared here
+├── index.css
+├── main.tsx
+└── Router.tsx
+```
+
+## React Compiler
 
 Currently, two official plugins are available:
 
 - [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
 - [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
-
-## React Compiler
 
 The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
 
