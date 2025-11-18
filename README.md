@@ -23,6 +23,15 @@ export const DELAY_TIME_LOADING = 1000;
     - update & delete note by clicking on note in grid
     - Import/Export Song feature via button in song detail page
 
+## Using Libraries
+- Mui
+- Tailwind
+- React Hook Form
+- Yup
+- Lodash
+- Moment
+- UUID
+
 ## Project folder structure
 
 ```js
