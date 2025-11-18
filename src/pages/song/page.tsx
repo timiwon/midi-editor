@@ -61,6 +61,7 @@ function SongPage() {
             setSelectedNote(null);
         } catch (error) {
             // do nothing
+            console.log(error)
         }
 
     }

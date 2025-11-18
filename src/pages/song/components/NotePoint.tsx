@@ -10,6 +10,10 @@ interface NotePointProps {
     rangeTime: number[];
     position: number;
     list: { [key: number]: Note };
+    mainCell: {
+        width: number,
+        height: number
+    };
     chunk: {
         length: number;
         width: number;
@@ -18,7 +22,7 @@ interface NotePointProps {
     onEditNoteClick: (noteData: Note) => void;
     onBlankTimeClick: (time: number) => void;
 }
-const NotePoint: React.FC<NotePointProps> = ({ position, rangeTime, list, chunk, onEditNoteClick, onBlankTimeClick }) => {
+const NotePoint: React.FC<NotePointProps> = ({ position, rangeTime, list, chunk, mainCell, onEditNoteClick, onBlankTimeClick }) => {
     const theme = useTheme();
     const { isMobile } = useUtils();
     const noteSize = isMobile ? 16 : 24; // Note points as colored circular dots (16-24px) at correct (track, time) positions
@@ -64,7 +68,7 @@ const NotePoint: React.FC<NotePointProps> = ({ position, rangeTime, list, chunk,
                 <Box>
                     {list[position].icon && <EmojiIcon
                         sx={{
-                            position: 'relative',
+                            position: isMobile ? 'relative' : 'absolute',
                             width: `${noteSize}px`,
                             height: `${noteSize}px`,
                             '&:hover': {
@@ -78,7 +82,7 @@ const NotePoint: React.FC<NotePointProps> = ({ position, rangeTime, list, chunk,
                     {!list[position].icon && <Box
                         className={`note-${position}`}
                         sx={{
-                            position: 'relative',
+                            position: isMobile ? 'relative' : 'absolute',
                             width: `${noteSize}px`,
                             height: `${noteSize}px`,
                             borderRadius: '50%',
@@ -119,7 +123,8 @@ const NotePoint: React.FC<NotePointProps> = ({ position, rangeTime, list, chunk,
 
             <Box
                 sx={{
-                    width: `${noteSize}px`,
+                    //width: `${noteSize}px`,
+                    width: `${mainCell.width}px`,
                     height: `${chunk.height}px`,
                 }}
                 onClick={() => onBlankTimeClick((position/2 + rangeTime[0]))}

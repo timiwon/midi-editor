@@ -60,7 +60,9 @@ function Home() {
             await createSong(data);
             setIsOpenSongModal(false);
             setSelectedSong(null);
-        } catch {
+        } catch (err) {
+            // do s.th
+            console.log(err)
         }
     }
 

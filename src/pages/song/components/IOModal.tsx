@@ -28,10 +28,7 @@ const IOModal: React.FC<IOModalProps> = ({
     }
 
     // exclude id from song data
-    const {
-        id,
-        ...args
-    } = data;
+    const { id, ...args } = data;
 
     return (
         <BaseModal

@@ -6,6 +6,7 @@ import {
 
 export const Card = styled(MuiCard)(({ theme }) => ({
     transition: 'transform 0.3s ease-in-out, boxShadow 0.3s ease-in-out',
+    color: theme.palette.text.primary,
     '&:hover': {
         transform: 'translateY(-5px) scale(1.02)',
         boxShadow: 10,
@@ -13,4 +14,8 @@ export const Card = styled(MuiCard)(({ theme }) => ({
 }));
 
 export const Button = styled(MuiButton)(({ theme }) => ({
+    borderColor: theme.palette.secondary.light,
+    '&:hover': {
+        borderColor: theme.palette.primary.dark
+    }
 }));

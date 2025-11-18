@@ -19,7 +19,7 @@ interface ButtonProps {
     onClick: (e: MouseEvent<HTMLButtonElement>) => void;
 }
 
-    ;
+;
 const Button: React.FC<ButtonProps> = ({
     children,
     icon,

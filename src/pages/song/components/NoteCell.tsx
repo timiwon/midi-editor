@@ -116,7 +116,7 @@ const NoteCell: React.FC<NoteCellProps> = ({ trackIndex, rangeTime, notes, mainC
             sx={{
                 width: `${chunk.height}px`,
                 height: '100%',
-                margin: '0 auto',
+                //margin: '0 auto',
                 cursor: 'pointer'
             }}
         >
@@ -127,6 +127,7 @@ const NoteCell: React.FC<NoteCellProps> = ({ trackIndex, rangeTime, notes, mainC
                     rangeTime={rangeTime}
                     list={list}
                     chunk={chunk}
+                    mainCell={mainCell}
                     onEditNoteClick={handleEditNoteClick}
                     onBlankTimeClick={handleBlankTimeInfoClick}
                 />
