@@ -34,6 +34,12 @@ export class SongService implements SongServiceInterface {
         
         const validatedData = await validateImportSong(data);
 
+        const originalNotes = validatedData.notes?.map(note => (`${note.track},${note.time}`));
+        const uniqueNotes = new Set(originalNotes);
+        if (uniqueNotes.size !== validatedData.notes?.length) {
+            throw Error(ErrorMessages[ErrorMessageTypes.duplicate])
+        }
+
         const result = await this.repo.rawUpdate(songId, validatedData);
         return result;
     }
