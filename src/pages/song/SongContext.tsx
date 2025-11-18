@@ -3,6 +3,7 @@ import type { Song, Note } from '@/types/entities';
 import type { UseSongValues } from '@/hooks';
 
 const SongContext = createContext<Partial<UseSongValues>>({
+    loading: false,
     song: null,
     error: null,
     // eslint-disable-next-line

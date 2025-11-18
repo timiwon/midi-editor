@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Box, Typography } from "@mui/material";
+import { Box } from "@mui/material";
 
 import type { Song } from "@/types/entities";
 import { useSongs } from "@/hooks";
@@ -92,16 +92,6 @@ function Home() {
     return (
         <SongsContext.Provider value={{ loading }}>
             <Box>
-                {/** Page Description */}
-                <MainBlock sx={{ mt: 0, mb: 10 }}>
-                    <Typography variant="h5" gutterBottom>
-                        Welcome to MIDI
-                    </Typography>
-                    <Typography variant="body1" align="justify">
-                        MIDI Editor - a web application similar to a piano roll MIDI editor where users can create, visualize, and manage musical notes placed at specific time points across multiple tracks (similar to FL Studio, Ableton Live, or GarageBand's piano roll view).
-                    </Typography>
-                </MainBlock>
-
                 {/** Songs Management */}
                 <MainBlock>
                     {/** Action toolbar */}

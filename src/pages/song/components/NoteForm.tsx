@@ -1,15 +1,15 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import * as Yup from 'yup';
 import { useForm, FormProvider } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { Box } from '@mui/material';
+import { Box, Button } from '@mui/material';
 
 import type { Note } from '@/types/entities';
 
 import { Input, NumberInput } from '@/shared-components/form';
 import ColorPicker from '@/shared-components/form/ColorPicker';
 import EmojiPicker from '@/shared-components/emoji-components/EmojiPicker';
-import { Button } from '@/shared-components/styled-components';
+import SongContext from '../SongContext';
 
 interface NoteFormProps {
     maxTime: number;
@@ -23,6 +23,7 @@ const NoteForm: React.FC<NoteFormProps> = ({
     onSubmit,
     onDelete
 }) => {
+    const { loading } = useContext(SongContext);
     const validationSchema = Yup.object().shape({
         track: Yup.number()
             .min(1, 'Minimum is 1!')
@@ -82,6 +83,7 @@ const NoteForm: React.FC<NoteFormProps> = ({
             }}>
                 {onDelete &&
                     <Button
+                        disabled={loading}
                         type="submit"
                         variant="contained"
                         color="error"
@@ -92,6 +94,7 @@ const NoteForm: React.FC<NoteFormProps> = ({
                     </Button>
                 }
                 <Button
+                    disabled={loading}
                     type="submit"
                     variant="contained"
                     color="primary"

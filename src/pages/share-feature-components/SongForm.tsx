@@ -2,14 +2,14 @@ import React, { useContext } from 'react';
 import * as Yup from 'yup';
 import { useForm, FormProvider } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { Box } from '@mui/material';
+import { Box, Button } from '@mui/material';
 
 import type { Song } from '@/types/entities';
 
 import { Input, NumberInput, AutocompleteChip } from '@/shared-components/form';
-import { Button } from "@/shared-components/styled-components";
 import SongTrackLabelsField from './SongTrackLabelsField';
 import SongsContext from '../home/SongsContext';
+import SongContext from '../song/SongContext';
 
 const validationSchema = Yup.object().shape({
     name: Yup.string()
@@ -55,6 +55,8 @@ const SongForm: React.FC<SongFormProps> = ({
     onSubmit
 }) => {
     const { loading } = useContext(SongsContext);
+    const songContext = useContext(SongContext);
+
     const methods = useForm({
         defaultValues: {
             name: data ? data.name : '',
@@ -107,13 +109,13 @@ const SongForm: React.FC<SongFormProps> = ({
                 justifyContent: 'flex-end'
             }}>
                 <Button
-                    disabled={loading}
+                    disabled={loading || songContext.loading}
                     type="submit"
                     variant="contained"
                     color="primary"
                     onClick={methods.handleSubmit(handleSubmit)}
                 >
-                    {loading ? 'Saving...' : 'Save'}
+                    {loading || songContext.loading ? 'Saving...' : 'Save'}
                 </Button>
             </Box>
         </FormProvider>

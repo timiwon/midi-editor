@@ -123,7 +123,6 @@ const NotePoint: React.FC<NotePointProps> = ({ position, rangeTime, list, chunk,
 
             <Box
                 sx={{
-                    //width: `${noteSize}px`,
                     width: `${mainCell.width*80/100}px`,
                     height: `${chunk.height}px`,
                 }}

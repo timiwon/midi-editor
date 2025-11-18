@@ -1,9 +1,10 @@
-import React from "react"
+import React, { useContext } from "react"
 
 import type { Note } from '@/types/entities';
 
 import BaseModal from "@/shared-components/modals/BaseModal";
 import NoteForm from "./NoteForm";
+import SongContext from "../SongContext";
 
 interface NoteModalProps {
     open: boolean;
@@ -23,6 +24,7 @@ const NoteModal: React.FC<NoteModalProps> = ({
     onSave,
     onDelete
 }) => {
+    const {loading} = useContext(SongContext);
 
     function handleSubmit (values: Note) {
         onSave(values);
@@ -31,7 +33,7 @@ const NoteModal: React.FC<NoteModalProps> = ({
     return (
         <BaseModal
             open={open}
-            onClose={onClose}
+            onClose={loading ? () => {} : onClose}
             title={title}
             description={''}
         >

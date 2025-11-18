@@ -80,7 +80,7 @@ const NoteContainer: React.FC<NoteContainerProps> = ({song}) => {
                                     height={`${cellHeight}px`}
                                     sx={{
                                         pt: 0,
-                                        pb: 0
+                                        pb: 0,
                                     }}
                                 >
                                     <NoteCell

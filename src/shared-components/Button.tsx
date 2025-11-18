@@ -1,13 +1,10 @@
 import type { MouseEvent } from 'react';
 
-import { useUtils } from "@/hooks";
-
-import {
-    Button as StyledButton
-} from "./styled-components"
+import { Button as MuiButton } from "@mui/material";
 import type { ButtonPropsColorOverrides, ButtonPropsVariantOverrides, SxProps } from '@mui/material';
 import type { OverridableStringUnion } from '@mui/types';
 
+import { useUtils } from "@/hooks";
 
 interface ButtonProps {
     children?: React.ReactNode;
@@ -33,7 +30,7 @@ const Button: React.FC<ButtonProps> = ({
 
     return (<>
         {isMobile && (
-            <StyledButton
+            <MuiButton
                 sx={{
                     ...sx
                 }}
@@ -43,10 +40,10 @@ const Button: React.FC<ButtonProps> = ({
                 onClick={onClick}
             >
                 {children}
-            </StyledButton>
+            </MuiButton>
         )}
         {!isMobile && (
-            <StyledButton
+            <MuiButton
                 sx={{
                     ...sx
                 }}
@@ -57,7 +54,7 @@ const Button: React.FC<ButtonProps> = ({
                 onClick={onClick}
             >
                 {children}
-            </StyledButton>
+            </MuiButton>
         )}
     </>)
 

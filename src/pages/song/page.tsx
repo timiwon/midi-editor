@@ -87,15 +87,8 @@ function SongPage() {
 
     return (
         <SongContext.Provider value={{
-            song, error, saveSong, saveNote, deleteNote
+            loading, song, error, saveSong, saveNote, deleteNote
         }}>
-            {loading && <Backdrop
-                sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.modal + 1 }}
-                open={true}
-                onClick={() => { }}
-            >
-                <CircularProgress color="inherit" />
-            </Backdrop>}
             <Box>
                 {/** Song Management */}
                 <MainBlock sx={{ mt: 0, mb: 10 }}>

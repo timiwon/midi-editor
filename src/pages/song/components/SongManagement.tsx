@@ -51,7 +51,6 @@ const SongManagement: React.FC<SongManagementProps> = ({ song, onOpenIOBtnClick,
                     <Button
                         sx={{ mr: 1 }}
                         variant='outlined'
-                        color="primary"
                         onClick={onOpenIOBtnClick}
                     >
                         {isMobile ? 'I/O' : 'Import/Export'}

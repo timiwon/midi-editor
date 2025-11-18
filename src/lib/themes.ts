@@ -1,26 +1,27 @@
 import { createTheme } from '@mui/material/styles';
-import { green, grey } from '@mui/material/colors';
 
-const toneColor = green;
+const toneColor = {
+    light: '#F8F4E8',
+    main: '#A1A67C',
+    dark: '#70845F',
+};
+const tableColor = {
+    light: '#738A6E',
+    main: '#CFE1B9',
+    dark: '#344C3D'
+}
 export const mainTheme = createTheme({
     palette: {
-        primary: {
-            light: toneColor[500],
-            main: toneColor[900],
-            dark: toneColor[900],
-        },
-        secondary: {
-            light: toneColor[100],
-            main: toneColor[400],
-            dark: toneColor[400],
-        },
+        primary: toneColor,
+        secondary: toneColor,
         background: {
-            paper: toneColor[50],
+            default: '#FFEDD0',
+            paper: '#FFF',
         },
     },
     typography: {
         body2: {
-            color: toneColor[900],
+            color: toneColor.dark,
             fontSize: '0.8rem',
         },
     },
@@ -28,7 +29,7 @@ export const mainTheme = createTheme({
         MuiCssBaseline: {
           styleOverrides: {
             body: {
-              backgroundColor: grey[100],
+              backgroundColor: '#FFF',
             },
           },
         },
@@ -42,20 +43,34 @@ export const mainTheme = createTheme({
                 }
             }
         },
+        MuiButton: {
+            styleOverrides: {
+                root: {
+                    color: '#000',
+                    '&.MuiButton-contained:hover': {
+                        color: '#FFF'
+                    }
+                }
+            }
+        },
         MuiTableCell: {
             styleOverrides: {
                 root: {
-                    backgroundColor: toneColor[200],
+                    backgroundColor: tableColor.main,
                     '&.MuiTableCell-head.major-cell': {
-                        backgroundColor: toneColor[500],
+                        backgroundColor: tableColor.dark,
+                        color: '#fff'
+                    },
+                    '&.MuiTableCell-head': {
+                        backgroundColor: tableColor.light,
                         color: '#fff'
                     },
                     '&.MuiTableCell-body': {
-                        backgroundColor: toneColor[50],
+                        backgroundColor: tableColor.main,
                         borderBottom: 'none',
                     },
                     '&.MuiTableCell-body.major-cell': {
-                        backgroundColor: toneColor[200],
+                        backgroundColor: "#E9F5DB",
                     },
                 }
             }

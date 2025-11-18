@@ -1,14 +1,14 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import * as Yup from 'yup';
 import { useForm, FormProvider } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { Box } from '@mui/material';
+import { Box, Button } from '@mui/material';
 
 import type { Song } from '@/types/entities';
 
 import { Input } from '@/shared-components/form';
-import { Button } from '@/shared-components/styled-components';
 import BaseModal from "@/shared-components/modals/BaseModal";
+import SongContext from '../SongContext';
 
 interface IOModalProps {
     open: boolean;
@@ -22,7 +22,6 @@ const IOModal: React.FC<IOModalProps> = ({
     onClose,
     onSave,
 }) => {
-
     function handleSubmit (values: string) {
         onSave(values);
     }
@@ -47,6 +46,8 @@ interface IOFormProps {
     onSubmit: (values: string) => void;
 }
 const IOForm: React.FC<IOFormProps> = ({data, onSubmit}) => {
+    const { loading } = useContext(SongContext);
+
     const validationSchema = Yup.object().shape({
         song: Yup.string()
             .required('Required'),
@@ -71,12 +72,13 @@ const IOForm: React.FC<IOFormProps> = ({data, onSubmit}) => {
                 justifyContent: 'flex-end'
             }}>
                 <Button
+                    disabled={loading}
                     type="submit"
                     variant="contained"
                     color="primary"
                     onClick={methods.handleSubmit(handleSubmit)}
                 >
-                    Import
+                    {loading ? 'Importing...' : 'Import'}
                 </Button>
             </Box>
         </FormProvider>
