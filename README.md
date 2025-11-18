@@ -32,7 +32,7 @@ export const DELAY_TIME_LOADING = 1000;
 - Moment
 - UUID
 
-## Project folder structure
+## Project Folder Structure
 
 ```js
 src
@@ -40,7 +40,7 @@ src
 │
 ├── lib 
 │   ├── repositories // Working with external data like localstorage, IndexedDB or RESTful Api
-│   │   ├── index.ts // Ideally we can use export to easy switching between localstorage and IndexedDB.
+│   │   ├── index.ts // Ideally we can use export to easy switching between localstorage, IndexedDB and RESTful Api.
 │   │   ├── base-repository-with-localstorage.ts
 │   │   └── ...
 │   ├── services // Working with business logic
