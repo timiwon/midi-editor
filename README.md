@@ -39,7 +39,7 @@ src
 ├── hooks
 │
 ├── lib 
-│   ├── repositories // Working with external data like localstorage or IndexedDB
+│   ├── repositories // Working with external data like localstorage, IndexedDB or RESTful Api
 │   │   ├── index.ts // Ideally we can use export to easy switching between localstorage and IndexedDB.
 │   │   ├── base-repository-with-localstorage.ts
 │   │   └── ...
