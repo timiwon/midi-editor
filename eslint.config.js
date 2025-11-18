@@ -22,6 +22,7 @@ export default defineConfig([
     rules: {
       indent: ['error', 4], // Enforces 4 spaces for indentation
       'no-tabs': 'error', // Disallows the use of tab characters
+      "@typescript-eslint/no-unused-vars": ["error", { "ignoreRestSiblings": true }]
     },
   },
 ])
