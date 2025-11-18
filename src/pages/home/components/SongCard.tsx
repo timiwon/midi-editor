@@ -76,7 +76,7 @@ const SongCard: React.FC<SongCardProps> = ({
                  * Description
                  */}
                 <Box sx={{ mb: 5 }}>
-                    <Typography variant="body1">
+                    <Typography variant="body1" className="line-clamp-3">
                         {data.description}
                     </Typography>
                 </Box>
