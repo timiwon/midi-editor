@@ -59,7 +59,7 @@ const NotePoint: React.FC<NotePointProps> = ({ position, rangeTime, list, chunk,
                 title={<Box>
                     <Typography variant="body1">
                         {list[position].title}
-                        {' - '}
+                        {list[position].title && list[position].title.length > 0 ? ' - ' : ''}
                         <Typography variant="body1" component='span'>{list[position].time}s</Typography>
                     </Typography>
                     <Typography variant="body1" whiteSpace={'pre-wrap'}>{list[position].description}</Typography>
